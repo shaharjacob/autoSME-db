@@ -12,7 +12,7 @@ import { isNull } from '../../utils'
 
 const db = firebase.database()
 
-const CreateAnalogy = ( {email} ) => {
+const CreateAnalogy = ( { email } ) => {
 
     const [base, setBase] = useState(["", "", "", "", "", "", "", "", "", ""])
     const [target, setTarget] = useState(["", "", "", "", "", "", "", "", "", ""])

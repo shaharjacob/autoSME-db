@@ -1,0 +1,29 @@
+.navbar-container {
+    display: grid;
+    grid-template-columns: 0.2fr 0.6fr 0.2fr;
+    border-bottom: 4px solid #e7e7e7;
+    padding-bottom: 5px;
+}
+
+.logo {
+    height: 50px;
+}
+
+.left-side {
+    padding-left: 10px;
+    padding-top: 5px;
+}
+
+.right-side {
+    padding-right: 10px;
+    padding-bottom: 10px;
+    text-align: right;
+    display: flex;
+    justify-content: right;
+}
+
+.hello-user {
+    color: rgb(43, 43, 43);
+    margin-right: 14px;
+    margin-top: 22px;
+}
