@@ -107,7 +107,7 @@ const Navbar = ( { user, setUser, setEmail } ) => {
                         </MenuItem>
                       </Link>
 
-                      <Link href="/about" color='inherit' underline='none'>
+                      <Link href="/create" color='inherit' underline='none'>
                         <MenuItem>
                           <ListItemIcon><AddIcon fontSize="small" /></ListItemIcon>
                           <ListItemText>Create analogy</ListItemText>
@@ -136,7 +136,9 @@ const Navbar = ( { user, setUser, setEmail } ) => {
           </Popper>
         </div>
         <div className='grid-logo'>
-          <img src={Logo} className='logo' alt="hyadata lab" />
+          <a href="http://www.hyadatalab.com/" style={{textDecoration: "none"}} rel="noreferrer" target="_blank">
+            <img src={Logo} className='logo' alt="hyadata lab" />
+          </a>
         </div>
         <div></div>
         <div className='right-side'>

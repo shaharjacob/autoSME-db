@@ -1,0 +1,13 @@
+.display-analogy-wrapper-container {
+    background-color: rgb(241, 241, 241);
+    text-align: center;
+    height: 100%;
+    padding-top: 40px;
+}
+
+@media only screen and (max-width: 978px) {   
+    
+    .display-analogy-wrapper-container {
+        padding-top: 30px;
+    }
+}

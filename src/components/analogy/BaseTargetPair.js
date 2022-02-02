@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import structuredClone from '@ungap/structured-clone';
 
 import Input from '@mui/material/Input';
+import IconButton from '@mui/material/IconButton';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -85,9 +86,9 @@ const BaseTargetPair = ({ base, setBase, target, setTarget, idx, analogyLength, 
             </FormControl>
             {analogyLength > 2
             ?
-                <button onClick={() => removeEntry()} className='delete-entry-button'>
-                    <DeleteIcon className='gray' />
-                </button>
+                <IconButton onClick={() => removeEntry()}>
+                    <DeleteIcon sx={{color: "#555555"}} />
+                </IconButton>
             :
                 <></>
             }

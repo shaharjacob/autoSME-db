@@ -1,5 +1,9 @@
 .blue {
-  color: rgb(33, 91, 141);
+  color: #1a4f81;
+}
+
+.bright-blue {
+  color: #315fc4;
 }
 
 .red {
@@ -7,7 +11,7 @@
 }
 
 .gray {
-  color:rgb(107, 107, 107)
+  color: #555555;
 }
 
 .green {

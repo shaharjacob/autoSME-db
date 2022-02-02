@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-import { useLocation } from 'react-router-dom'
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
@@ -16,21 +15,13 @@ const db = firebase.database()
 
 const DisplayAnalogy = ( {id, email} ) => {
 
-    let location = useLocation()
     const [base, setBase] = useState([])
     const [target, setTarget] = useState([])
     const [votes, setVotes] = useState(0)
-    const [analogyID, setAnalogyID] = useState("")
     const [voteColor, setVoteColor] = useState("#646464")
-    
 
     useEffect(() => { 
         async function fetchDatabaseWithID() {
-            if (id === null || id === undefined) {
-                let params = new URLSearchParams(location.search)
-                id = params.get('id')
-            }
-            setAnalogyID(id)
             const analogiesRef = db.ref(`analogies/${id}`);
             let elementFromDB = await analogiesRef.once('value');
             let snapshot =  elementFromDB.val();
@@ -52,7 +43,7 @@ const DisplayAnalogy = ( {id, email} ) => {
         if (email === "" || email === null || email === undefined) {
             return
         }
-        const analogiesRef = db.ref(`analogies/${analogyID}`);
+        const analogiesRef = db.ref(`analogies/${id}`);
         async function _updateVote() {
             let elementFromDB = await analogiesRef.once('value');
             let snapshot =  elementFromDB.val();
@@ -96,7 +87,7 @@ const DisplayAnalogy = ( {id, email} ) => {
                         </IconButton>
                     </Tooltip>
                     <Tooltip title="Open in a new tab">
-                        <IconButton onClick={() => window.open(`/analogy?id=${analogyID}`)}>
+                        <IconButton onClick={() => window.open(`/analogy?id=${id}`)}>
                             <LaunchIcon />
                         </IconButton>
                     </Tooltip>
