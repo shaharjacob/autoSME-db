@@ -1,0 +1,42 @@
+.about-container {
+    background-color: rgb(241, 241, 241);
+    text-align: center;
+    height: 100%;
+}
+
+.about-title {
+    font-size: 36px;
+    font-weight: 600;
+    color: #164b9b;
+    padding-top: 40px;
+}
+
+.about-content {
+    font-size: 20px;
+    color: #5a5a5a;
+    padding-top: 40px;
+    line-height: 1.4;
+}
+
+.analogy-example {
+    padding-top: 40px;
+}
+
+@media only screen and (max-width: 978px) {    
+
+    .about-title {
+        font-size: 30px;
+        padding-top: 30px;
+    }
+    
+    .about-content {
+        font-size: 16px;
+        padding: 30px;
+        padding-bottom: 0;
+    }
+    
+    .analogy-example {
+        padding: 60px;
+        padding-top: 20px;
+    }
+  }

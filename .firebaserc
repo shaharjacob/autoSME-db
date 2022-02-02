@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "staging": "autosme-db"
+  },
+  "targets": {}
+}

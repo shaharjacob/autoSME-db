@@ -6,7 +6,7 @@ import DisplayAnalogy from './DisplayAnalogy';
 
 const db = firebase.database()
 
-const DisplayDataset = () => {
+const DisplayDataset = ({ email }) => {
 
     const [datasetKeys, setDatasetKeys] = useState([])
 
@@ -22,13 +22,16 @@ const DisplayDataset = () => {
             setDatasetKeys(keys)
           }
           fetchDatabase()
-        // return () => analogiesRef.off()
     }, [])
 
     return (
         <div id='display-dataset-container'>
             {datasetKeys.map((id) => {
-                return <DisplayAnalogy key={id} id={id} />
+                return (
+                    <div key={id} className='analogy-entry'>
+                        <DisplayAnalogy id={id} email={email} />
+                    </div>
+                )
             })}
         </div>
     );

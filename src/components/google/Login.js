@@ -21,7 +21,8 @@ const Login = ( {setUser, setEmail} ) => {
   };
 
   const onFailure = (res) => {
-    console.log(`[Login failed] res: ${res}`);
+    console.log(`[Login failed] error: ${res.error}`);
+    console.log(`[Login failed] details: ${res.details}`);
   };
 
   return (

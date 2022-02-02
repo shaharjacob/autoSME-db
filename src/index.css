@@ -3,9 +3,13 @@
 }
 
 .red {
-  color: rgb(150, 31, 31);
+  color: #9b1515;
 }
 
 .gray {
   color:rgb(107, 107, 107)
+}
+
+.green {
+  color: #0c6e11;
 }

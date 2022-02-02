@@ -14,7 +14,7 @@ const Logout = ( {setUser, setEmail} ) => {
     setEmail("")
     console.log('Logout made successfully!');
     document.getElementById('google-logout-button').style.display = 'none'
-    document.getElementById('create-analogy-container').style.display = 'none'
+    // document.getElementById('create-analogy-container').style.display = 'none'
     document.getElementById('google-login-button').style.display = 'block'
   };
 

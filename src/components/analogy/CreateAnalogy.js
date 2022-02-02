@@ -54,8 +54,8 @@ const CreateAnalogy = ( { email } ) => {
             base: actual_base,
             target: actual_target,
             creator: email,
-            comments: [],
-            likes: 0
+            votes: [],
+            unvotes: []
         })
     }
     

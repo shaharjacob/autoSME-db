@@ -1,0 +1,21 @@
+.random-container {
+    background-color: rgb(241, 241, 241);
+    text-align: center;
+    height: 100%;
+}
+
+.random-analogy {
+    padding-top: 40px;
+}
+
+.show-next {
+    margin-top: 40px;
+}
+
+@media only screen and (max-width: 978px) {    
+    
+    .analogy-example {
+        padding: 60px;
+        padding-top: 20px;
+    }
+  }

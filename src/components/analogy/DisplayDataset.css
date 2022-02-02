@@ -1,0 +1,17 @@
+#display-dataset-container {
+    background-color: rgb(241, 241, 241);
+    text-align: center;
+    height: 100%;
+}
+
+.analogy-entry {
+    padding-top: 40px;
+}
+
+@media only screen and (max-width: 978px) {    
+    
+    .analogy-entry {
+        padding: 60px;
+        padding-top: 20px;
+    }
+  }
