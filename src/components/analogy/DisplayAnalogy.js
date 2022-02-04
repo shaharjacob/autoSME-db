@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
+import Chip from '@mui/material/Chip';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
@@ -19,6 +20,8 @@ const DisplayAnalogy = ( {id, email} ) => {
     const [target, setTarget] = useState([])
     const [votes, setVotes] = useState(0)
     const [voteColor, setVoteColor] = useState("#646464")
+    const [labels, setLabels] = useState([""])
+    
 
     useEffect(() => { 
         async function fetchDatabaseWithID() {
@@ -27,6 +30,7 @@ const DisplayAnalogy = ( {id, email} ) => {
             let snapshot =  elementFromDB.val();
             setBase(snapshot.base);
             setTarget(snapshot.target);
+            setLabels(snapshot.references);
             setVotes(snapshot.votes.length - 1); // -1 because of empty value in db
             if (snapshot.votes.includes(email)) {
                 setVoteColor("#0c6e11")
@@ -76,11 +80,11 @@ const DisplayAnalogy = ( {id, email} ) => {
     return (
         <div id='display-analogy-container'>
             <div className='top'>
-                <div className='entry-left'>
+                <div className='align-left'>
                     <ThumbUpAltIcon color='primary' sx={{ fontSize: 18, paddingTop: '8px', paddingLeft: '8px' }}  /> 
                     <span style={{fontSize: "12px"}}>{votes}</span>
                 </div>
-                <div className='entry-right'>
+                <div className='align-right'>
                     <Tooltip title="Report inappropriate content">
                         <IconButton>
                             <ReportIcon />
@@ -98,7 +102,7 @@ const DisplayAnalogy = ( {id, email} ) => {
                     return (
                         <div className='entries' key={`display_analogy_${idx}`}>
                             <div></div>
-                            <div className='entry-left'>
+                            <div className='align-left'>
                                 {base[idx]}
                             </div>
                             <div className='arrow'>
@@ -119,6 +123,19 @@ const DisplayAnalogy = ( {id, email} ) => {
                 <Button onClick={() => addComment()} sx={{color: "#646464"}} startIcon={<MessageIcon />} disabled>
                     Comment
                 </Button>
+            </div>
+            <div className='references'>
+                <span className='references-title'>References:</span> 
+                <span className='references-content'>
+                    {labels.map((val, index) => {
+                        return (
+                            <span key={`${val}_${index}`}>
+                                {val}
+                                {(index === labels.length - 1) || (val === "") ? "" : ", "} 
+                            </span>
+                        )
+                    })}
+                </span>
             </div>
         </div>
     );
