@@ -14,9 +14,18 @@ const Login = ( {setUser, setEmail} ) => {
     setUser(res.profileObj.name)
     setEmail(res.profileObj.email)
     console.log(`[Login success] currentUser: ${res.profileObj.email}`);
-    document.getElementById('google-login-button').style.display = 'none'
-    document.getElementById('google-logout-button').style.display = 'block'
-    document.getElementById('create-analogy-container').style.display = 'block'
+    let login_button = document.getElementById('google-login-button')
+    let logout_button = document.getElementById('google-logout-button')
+    let create_analogy = document.getElementById('create-analogy-container')
+    if (login_button != null && login_button != undefined) {
+      login_button.style.display = 'none'
+    }
+    if (logout_button != null && logout_button != undefined) {
+      logout_button.style.display = 'block'
+    }
+    if (create_analogy != null && create_analogy != undefined) {
+      create_analogy.style.display = 'block'
+    }
     refreshTokenSetup(res);
   };
 
