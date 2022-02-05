@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import { useLocation } from 'react-router-dom'
 
-import './CreateAnalogyWrapper.css'
+import './DisplayAnalogyWrapper.css'
 import DisplayAnalogy from './DisplayAnalogy'
 
 const DisplayAnalogyWrapper = ({ email }) => {
@@ -16,7 +16,7 @@ const DisplayAnalogyWrapper = ({ email }) => {
   }, [email, location])
 
   return (
-    <div className='create-analogy-wrapper-container'>
+    <div className='display-analogy-wrapper-container'>
         {analogyID !== ""
         ?
             <DisplayAnalogy id={analogyID} email={email} />
