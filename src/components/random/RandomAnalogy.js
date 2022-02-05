@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import ShuffleIcon from '@mui/icons-material/Shuffle';
 
 import './RandomAnalogy.css'
-import DisplayAnalogy from '../analogy/DisplayAnalogy'
+import DisplayAnalogy from '../analogy/display/DisplayAnalogy'
 import { firebase  } from '../firebase/InitFirebase';
 
 const db = firebase.database()

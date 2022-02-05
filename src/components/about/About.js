@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './About.css'
-import DisplayAnalogy from '../analogy/DisplayAnalogy'
+import DisplayAnalogy from '../analogy/display/DisplayAnalogy'
 
 const About = ({ email }) => {
 

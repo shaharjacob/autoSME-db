@@ -9,7 +9,7 @@ import structuredClone from '@ungap/structured-clone';
 
 import './DisplayDataset.css'
 import { firebase  } from '../firebase/InitFirebase';
-import DisplayAnalogy from './DisplayAnalogy';
+import DisplayAnalogy from '../analogy/display/DisplayAnalogy';
 
 const db = firebase.database()
 

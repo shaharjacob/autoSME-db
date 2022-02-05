@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-import Chip from '@mui/material/Chip';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
@@ -10,7 +9,7 @@ import MessageIcon from '@mui/icons-material/Message';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 
 import './DisplayAnalogy.css'
-import { firebase  } from '../firebase/InitFirebase';
+import { firebase  } from '../../firebase/InitFirebase';
 
 const db = firebase.database()
 

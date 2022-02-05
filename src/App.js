@@ -6,9 +6,9 @@ import About from './components/about/About'
 import Navbar from './components/navbar/Navbar'
 import Background from './components/background/Background';
 import RandomAnalogy from './components/random/RandomAnalogy';
-import DisplayDataset from './components/analogy/DisplayDataset';
-import CreateAnalogyWrapper from './components/analogy/CreateAnalogyWrapper';
-import DisplayAnalogyWrapper from './components/analogy/DisplayAnalogyWrapper';
+import DisplayDataset from './components/dataset//DisplayDataset';
+import CreateAnalogyWrapper from './components/analogy/create/CreateAnalogyWrapper';
+import DisplayAnalogyWrapper from './components/analogy/display/DisplayAnalogyWrapper';
 
 
 const App = () => {

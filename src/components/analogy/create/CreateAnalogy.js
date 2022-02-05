@@ -11,9 +11,9 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 
 import './CreateAnalogy.css'
-import { firebase  } from '../firebase/InitFirebase';
+import { firebase  } from '../../firebase/InitFirebase';
 import BaseTargetPair from './BaseTargetPair'
-import { isNull } from '../../utils'
+import { isNull } from '../../../utils'
 
 const db = firebase.database()
 
