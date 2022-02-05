@@ -22,7 +22,7 @@ const About = ({ email }) => {
         </div>
         <div className='analogy-example'>
             {/* TODO: display the analogy with the most votes */}
-            <DisplayAnalogy id='-MuIZF5PikmxBRtqtVEE' email={email} />
+            <DisplayAnalogy id='-Mv57uhOvSQ8TCQmSVFv' email={email} />
         </div>
     </div>
   );
