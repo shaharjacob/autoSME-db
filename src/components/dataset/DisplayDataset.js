@@ -1,12 +1,17 @@
 import React, {useState, useEffect} from 'react';
 
+import { CSVLink } from 'react-csv';
+import Tooltip from '@mui/material/Tooltip';
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
+
 import './DisplayDataset.css'
-import { firebase  } from '../firebase/InitFirebase';
-import DisplayAnalogy from '../analogy/display/DisplayAnalogy';
 import FilterBySize from './FilterBySize';
 import FilterByKeywords from './FilterByKeywords';
+import { firebase  } from '../firebase/InitFirebase';
+import DisplayAnalogy from '../analogy/display/DisplayAnalogy';
 
 const db = firebase.database()
+
 
 const DisplayDataset = ({ email }) => {
 
@@ -70,8 +75,48 @@ const DisplayDataset = ({ email }) => {
           fetchDatabase()
     }, [])
 
+    function get_headers_for_csv() {
+        let headers = []
+        // the order is important
+        for (let i = 0; i < 10; i++) {
+            headers.push({ label: `Base ${i+1}`, key: `base_${i+1}` })
+        }
+        for (let i = 0; i < 10; i++) {
+            headers.push({ label: `Target ${i+1}`, key: `target_${i+1}` })
+        }
+        return headers
+    }
+
+    function get_data_for_csv() {
+        let data = []
+        for (const [key, value] of Object.entries(filteredDatabase)) {
+            let row = {}
+            for (let i = 0; i < 10; i++) {
+                let b = (i < value.base.length) ? value.base[i] : ""
+                row[`base_${i+1}`] = b
+            }
+            for (let i = 0; i < 10; i++) {
+                let t = (i < value.target.length) ? value.target[i] : ""
+                row[`target_${i+1}`] = t
+            }
+            data.push(row)
+        }
+        return data
+    }
+
     return (
         <div id='display-dataset-container'>
+            <div className='download-csv'>
+                <CSVLink
+                    headers={get_headers_for_csv()}
+                    data={get_data_for_csv()}
+                    filename="autosme_db.csv"
+                >
+                    <Tooltip title="Download the currently displayed database as CSV">
+                        <FileDownloadIcon sx={{color: '#868686'}} />
+                    </Tooltip>
+                </CSVLink>
+            </div>
             <div className='filter'>
                 <div className='filter-by-size'>
                     <FilterBySize 
@@ -91,10 +136,10 @@ const DisplayDataset = ({ email }) => {
                     />
                 </div>
             </div>
-            {Object.keys(filteredDatabase).map((id) => {
+            {Object.entries(filteredDatabase).map(([id, val]) => {
                 return (
                     <div key={id} className='analogy-entry'>
-                        <DisplayAnalogy id={id} values={filteredDatabase[id]} email={email} />
+                        <DisplayAnalogy id={id} values={val} email={email} />
                     </div>
                 )
             })}

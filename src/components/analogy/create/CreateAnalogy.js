@@ -57,7 +57,7 @@ const CreateAnalogy = ( { email } ) => {
 
         let references_as_string = document.getElementById("standard-adornment-references").value
         let references = [""]
-        if (references_as_string != "" && references_as_string != null && references_as_string != undefined ) {
+        if (references_as_string !== "" && references_as_string !== null && references_as_string !== undefined ) {
             let references_without_trim = references_as_string.split(",");
             for (let i = 0; i < references_without_trim.length; i++) {
                 references.push(references_without_trim[i].trim())
