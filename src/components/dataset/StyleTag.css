@@ -1,0 +1,35 @@
+.tag-wrapper {
+    display: flex;
+    align-items: center;
+    height: 24px;
+    margin: 2px;
+    line-height: 22px;
+    background-color: #fafafa;
+    border: 1px solid #e8e8e8;
+    border-radius: 2px;
+    box-sizing: content-box;
+    padding: 0 4px 0 10px;
+    outline: 0;
+    overflow: hidden;    
+}
+
+.tag-wrapper:hover {
+    border-color: #40a9ff;
+    background-color: #e6f7ff;
+}
+
+.tag-wrapper > svg {
+    cursor: pointer;
+    padding: 4px;
+}
+
+.tag-wrapper > svg:hover {
+    background-color: #d3e1f1;
+}
+
+.tag-label {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 12px;
+}

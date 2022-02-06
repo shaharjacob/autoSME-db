@@ -10,7 +10,6 @@ import DisplayDataset from './components/dataset//DisplayDataset';
 import CreateAnalogyWrapper from './components/analogy/create/CreateAnalogyWrapper';
 import DisplayAnalogyWrapper from './components/analogy/display/DisplayAnalogyWrapper';
 
-
 const App = () => {
 
   const [user, setUser] = useState("Guest")

@@ -1,15 +1,10 @@
 import React, {useState, useEffect} from 'react';
 
-import Checkbox from '@mui/material/Checkbox';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
-import structuredClone from '@ungap/structured-clone';
-
 import './DisplayDataset.css'
 import { firebase  } from '../firebase/InitFirebase';
 import DisplayAnalogy from '../analogy/display/DisplayAnalogy';
+import FilterBySize from './FilterBySize';
+import FilterByKeywords from './FilterByKeywords';
 
 const db = firebase.database()
 
@@ -17,87 +12,75 @@ const DisplayDataset = ({ email }) => {
 
     const [origDatabase, setOrigDatabase] = useState({})
     const [filteredDatabase, setFilteredDatabase] = useState({})
-    const [checkboxes, setCheckboxes] = useState([false, false, false, false, false])
+    const [keywordsToIDs, setKeywordsToIDs] = useState([])
 
 
     useEffect(() => { 
         const analogiesRef = db.ref("analogies");
         async function fetchDatabase() {
-            let dataset = await analogiesRef.once('value');
-            let snapshot =  dataset.val()
+            let _dataset = await analogiesRef.once('value');
+            let _snapshot =  _dataset.val()
             let _database = {}
-            for (const [analogyID, analogyValues] of Object.entries(snapshot)) {
+            let _keywords = {} // we use dictionary in the first step for quick 'in' check
+            for (const [analogyID, analogyValues] of Object.entries(_snapshot)) {
                 _database[analogyID] = analogyValues
+
+                // analogy keywords (base and target)
+                for (let i = 0; i < analogyValues.base.length; i++) {
+                    // base
+                    if (!(analogyValues.base[i] in _keywords)) {
+                        _keywords[analogyValues.base[i]] = []
+                    }
+                    _keywords[analogyValues.base[i]].push(analogyID)
+
+                    // target
+                    if (!(analogyValues.target[i] in _keywords)) {
+                        _keywords[analogyValues.target[i]] = []
+                    }
+                    _keywords[analogyValues.target[i]].push(analogyID)
+                }
+                
+                // references keywords (for example 'green eval')
+                for (let i = 0; i < analogyValues.references.length; i++) {
+                    // the first value should be empty because of firebase issue with empty arrays..
+                    if (analogyValues.references[i] !== "" && analogyValues.references[i] !== null && analogyValues.references[i] !== undefined) {
+                        if (!(analogyValues.references[i] in _keywords)) {
+                            _keywords[analogyValues.references[i]] = []
+                        }
+                        _keywords[analogyValues.references[i]].push(analogyID)
+                    } 
+                }
             }
+            // now we will convert the dictionary to array options format for the keywords search
+            let _keywords_as_array = []
+            for (const [k, v] of Object.entries(_keywords)) {
+                _keywords_as_array.push({
+                    label: k,
+                    analogies: v
+                })
+            }
+            setKeywordsToIDs(_keywords_as_array)
             setOrigDatabase(_database)
             setFilteredDatabase(_database)
           }
           fetchDatabase()
     }, [])
 
-    function onFilterByAnalogySize(index) {
-        let _checkboxes = structuredClone(checkboxes)
-        _checkboxes[index] = !_checkboxes[index];
-        setCheckboxes(_checkboxes)
-
-        if (!_checkboxes[0] && !_checkboxes[1] && !_checkboxes[2] && !_checkboxes[3] && !_checkboxes[4]) {
-            setFilteredDatabase(origDatabase);
-            return
-        }
-        
-        let newDatasetKeys = {}
-        for (const [key, value] of Object.entries(origDatabase)) {
-            let analogy_size = value.base.length;
-            if (_checkboxes[analogy_size - 2]) {
-                newDatasetKeys[key] = value
-            }
-        }
-        setFilteredDatabase(newDatasetKeys)
-    }
-
     return (
         <div id='display-dataset-container'>
             <div className='filter'>
                 <div className='filter-by-size'>
-                    <FormControl component="fieldset">
-                        <FormLabel component="legend">Filter by analogy size</FormLabel>
-                        <FormGroup aria-label="position" row>
-                            <FormControlLabel
-                                control={<Checkbox />}
-                                label="2x2"
-                                labelPlacement="bottom"
-                                onChange={() => onFilterByAnalogySize(0)}
-                            />
-                            <FormControlLabel
-                                id="checkbox-3x3"
-                                control={<Checkbox />}
-                                label="3x3"
-                                labelPlacement="bottom"
-                                onChange={() => onFilterByAnalogySize(1)}
-                            />
-                            <FormControlLabel
-                                id="checkbox-4x4"
-                                control={<Checkbox />}
-                                label="4x4"
-                                labelPlacement="bottom"
-                                onChange={() => onFilterByAnalogySize(2)}
-                            />
-                            <FormControlLabel
-                                id="checkbox-5x5"
-                                control={<Checkbox />}
-                                label="5x5"
-                                labelPlacement="bottom"
-                                onChange={() => onFilterByAnalogySize(3)}
-                            />
-                            <FormControlLabel
-                                id="checkbox-6"
-                                control={<Checkbox />}
-                                label="6+"
-                                labelPlacement="bottom"
-                                onChange={() => onFilterByAnalogySize(4)}
-                            />
-                        </FormGroup>
-                    </FormControl>
+                    <FilterBySize 
+                        setFilteredDatabase={setFilteredDatabase} 
+                        origDatabase={origDatabase}  
+                    />
+                </div>
+                <div className='filter-by-keywords'>
+                    <FilterByKeywords 
+                        options={keywordsToIDs} 
+                        filteredDatabase={filteredDatabase}
+                        setFilteredDatabase={setFilteredDatabase}
+                    />
                 </div>
             </div>
             {Object.keys(filteredDatabase).map((id) => {
