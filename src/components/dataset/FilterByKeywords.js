@@ -7,25 +7,33 @@ import { useAutocomplete } from '@mui/base/AutocompleteUnstyled';
 import { StyledTag } from './StyleTag'
 import './FilterByKeywords.css'
 
-const FilterByKeywords = ({ options, filteredDatabase, setFilteredDatabase }) => {
+const FilterByKeywords = ({ options, setFilteredDatabase, origDatabase, setFilteredDatabaseOnlyByKeywords, filteredDatabaseOnlyBySize }) => {
 
     function onChooseKeyword(event, val) {
         if (val.length < 1) {
+            setFilteredDatabaseOnlyByKeywords(origDatabase)
+            setFilteredDatabase(filteredDatabaseOnlyBySize)
             return
         }
-        let _filteredDatabase = {}
+        let _filtered_database_by_keywords = {}
+        let _filtered_database = {}
         let _ids = new Set()
         for (let i = 0; i < val.length; i++) {
             for (let j = 0; j < val[i].analogies.length; j++) {
                 _ids.add(val[i].analogies[j])
             }
         }
-        for (const [k, v] of Object.entries(filteredDatabase)) {
+        for (const [k, v] of Object.entries(origDatabase)) {
             if (_ids.has(k)) {
-                _filteredDatabase[k] = v
+                _filtered_database_by_keywords[k] = v
+                if (k in filteredDatabaseOnlyBySize) {
+                    _filtered_database[k] = v
+                }
+
             }
         }
-        setFilteredDatabase(_filteredDatabase)
+        setFilteredDatabaseOnlyByKeywords(_filtered_database_by_keywords)
+        setFilteredDatabase(_filtered_database)
     }
   
 

@@ -12,6 +12,8 @@ const DisplayDataset = ({ email }) => {
 
     const [origDatabase, setOrigDatabase] = useState({})
     const [filteredDatabase, setFilteredDatabase] = useState({})
+    const [filteredDatabaseOnlyBySize, setFilteredDatabaseOnlyBySize] = useState({})
+    const [filteredDatabaseOnlyByKeywords, setFilteredDatabaseOnlyByKeywords] = useState({})
     const [keywordsToIDs, setKeywordsToIDs] = useState([])
 
 
@@ -62,6 +64,8 @@ const DisplayDataset = ({ email }) => {
             setKeywordsToIDs(_keywords_as_array)
             setOrigDatabase(_database)
             setFilteredDatabase(_database)
+            setFilteredDatabaseOnlyBySize(_database)
+            setFilteredDatabaseOnlyByKeywords(_database)
           }
           fetchDatabase()
     }, [])
@@ -73,13 +77,17 @@ const DisplayDataset = ({ email }) => {
                     <FilterBySize 
                         setFilteredDatabase={setFilteredDatabase} 
                         origDatabase={origDatabase}  
+                        setFilteredDatabaseOnlyBySize={setFilteredDatabaseOnlyBySize}
+                        filteredDatabaseOnlyByKeywords={filteredDatabaseOnlyByKeywords}
                     />
                 </div>
                 <div className='filter-by-keywords'>
                     <FilterByKeywords 
                         options={keywordsToIDs} 
-                        filteredDatabase={filteredDatabase}
                         setFilteredDatabase={setFilteredDatabase}
+                        origDatabase={origDatabase}  
+                        setFilteredDatabaseOnlyByKeywords={setFilteredDatabaseOnlyByKeywords}
+                        filteredDatabaseOnlyBySize={filteredDatabaseOnlyBySize}
                     />
                 </div>
             </div>

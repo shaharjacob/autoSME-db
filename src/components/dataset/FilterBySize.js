@@ -8,7 +8,7 @@ import structuredClone from '@ungap/structured-clone';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
 
-const FilterBySize = ({ setFilteredDatabase, origDatabase }) => {
+const FilterBySize = ({ setFilteredDatabase, origDatabase, setFilteredDatabaseOnlyBySize, filteredDatabaseOnlyByKeywords }) => {
 
     const [checkboxes, setCheckboxes] = useState([false, false, false, false, false])
 
@@ -18,18 +18,26 @@ const FilterBySize = ({ setFilteredDatabase, origDatabase }) => {
         setCheckboxes(_checkboxes)
 
         if (!_checkboxes[0] && !_checkboxes[1] && !_checkboxes[2] && !_checkboxes[3] && !_checkboxes[4]) {
-            setFilteredDatabase(origDatabase)
+            setFilteredDatabaseOnlyBySize(origDatabase)
+            setFilteredDatabase(filteredDatabaseOnlyByKeywords)
             return
         }
         
-        let newDatasetKeys = {}
+        let _filtered_database_by_size = {}
+        let _filtered_database = {}
         for (const [key, value] of Object.entries(origDatabase)) {
             let analogy_size = value.base.length;
             if (_checkboxes[analogy_size - 2]) {
-                newDatasetKeys[key] = value
+                // this is the db depend only by the size
+                _filtered_database_by_size[key] = value
+                if (key in filteredDatabaseOnlyByKeywords) {
+                    // this is the actual db
+                    _filtered_database[key] = value
+                }
             }
         }
-        setFilteredDatabase(newDatasetKeys)
+        setFilteredDatabaseOnlyBySize(_filtered_database_by_size)
+        setFilteredDatabase(_filtered_database)
     }
 
     return (
