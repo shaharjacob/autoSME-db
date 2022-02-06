@@ -17,6 +17,11 @@
     padding-top: 20px;
 }
 
+.download-label {
+    color: #888888;
+    text-decoration: none;
+}
+
 @media only screen and (max-width: 978px) {    
     
     .analogy-entry {

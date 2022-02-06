@@ -3,6 +3,9 @@ import React, {useState, useEffect} from 'react';
 import { CSVLink } from 'react-csv';
 import Tooltip from '@mui/material/Tooltip';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import IconButton from '@mui/material/IconButton';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 
 import './DisplayDataset.css'
 import FilterBySize from './FilterBySize';
@@ -20,6 +23,13 @@ const DisplayDataset = ({ email }) => {
     const [filteredDatabaseOnlyBySize, setFilteredDatabaseOnlyBySize] = useState({})
     const [filteredDatabaseOnlyByKeywords, setFilteredDatabaseOnlyByKeywords] = useState({})
     const [keywordsToIDs, setKeywordsToIDs] = useState([])
+
+    // download
+    const [anchorEl, setAnchorEl] = useState(null);
+    const openDownloadMenu = Boolean(anchorEl);
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
 
 
     useEffect(() => { 
@@ -104,18 +114,60 @@ const DisplayDataset = ({ email }) => {
         return data
     }
 
+    function get_data_for_json() {
+        let data = {}
+        for (const [key, value] of Object.entries(filteredDatabase)) {
+            data[key] = {}
+            data[key]["base"] = value.base
+            data[key]["target"] = value.target
+        }
+        return encodeURIComponent(JSON.stringify(data))
+    }
+
     return (
         <div id='display-dataset-container'>
             <div className='download-csv'>
-                <CSVLink
-                    headers={get_headers_for_csv()}
-                    data={get_data_for_csv()}
-                    filename="autosme_db.csv"
-                >
-                    <Tooltip title="Download the currently displayed database as CSV">
-                        <FileDownloadIcon sx={{color: '#868686'}} />
-                    </Tooltip>
-                </CSVLink>
+            <IconButton
+                id="basic-button"
+                aria-controls={openDownloadMenu ? 'basic-menu' : undefined}
+                aria-haspopup="true"
+                aria-expanded={openDownloadMenu ? 'true' : undefined}
+                onClick={handleClick}
+            >
+                <Tooltip title="Download the currently displayed database">
+                    <FileDownloadIcon sx={{color: '#868686'}} />
+                </Tooltip>
+            </IconButton>
+            <Menu
+                id="basic-menu"
+                anchorEl={anchorEl}
+                open={openDownloadMenu}
+                onClose={() => setAnchorEl(null)}
+                MenuListProps={{
+                    'aria-labelledby': 'basic-button',
+                }}
+            >
+                <MenuItem>
+                    <CSVLink
+                        headers={get_headers_for_csv()}
+                        data={get_data_for_csv()}
+                        filename="autosme_db.csv"
+                        className='download-label'
+                    >
+                        .csv
+                    </CSVLink>
+                </MenuItem>
+                <MenuItem>
+                    <a 
+                        href={`data:text/json;charset=utf-8,${get_data_for_json()}`} 
+                        download="filename.json"
+                        className='download-label'
+                    >
+                        .json
+                    </a>
+                </MenuItem>
+            </Menu>
+                
             </div>
             <div className='filter'>
                 <div className='filter-by-size'>
