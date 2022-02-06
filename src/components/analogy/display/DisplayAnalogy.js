@@ -13,7 +13,7 @@ import { firebase  } from '../../firebase/InitFirebase';
 
 const db = firebase.database()
 
-const DisplayAnalogy = ( {id, email} ) => {
+const DisplayAnalogy = ( {id, values, email} ) => {
 
     const [base, setBase] = useState([])
     const [target, setTarget] = useState([])
@@ -21,22 +21,30 @@ const DisplayAnalogy = ( {id, email} ) => {
     const [voteColor, setVoteColor] = useState("#646464")
     const [labels, setLabels] = useState([""])
     
+    function setStates(obj) {
+        setBase(obj.base);
+        setTarget(obj.target);
+        setLabels(obj.references);
+        setVotes(obj.votes.length - 1); // -1 because of empty value in db
+        if (obj.votes.includes(email)) {
+            setVoteColor("#0c6e11")
+        }
+    }
 
     useEffect(() => { 
-        async function fetchDatabaseWithID() {
-            const analogiesRef = db.ref(`analogies/${id}`);
-            let elementFromDB = await analogiesRef.once('value');
-            let snapshot =  elementFromDB.val();
-            setBase(snapshot.base);
-            setTarget(snapshot.target);
-            setLabels(snapshot.references);
-            setVotes(snapshot.votes.length - 1); // -1 because of empty value in db
-            if (snapshot.votes.includes(email)) {
-                setVoteColor("#0c6e11")
+        if (values !== null && values !== undefined && Object.keys(values).length > 0) {
+            setStates(values);
+        }
+        else {
+            async function fetchDatabaseWithID() {
+                const analogiesRef = db.ref(`analogies/${id}`);
+                let elementFromDB = await analogiesRef.once('value');
+                let snapshot =  elementFromDB.val();
+                setStates(snapshot);
             }
-          }
-        fetchDatabaseWithID();
-    }, [id, email])
+            fetchDatabaseWithID();
+        }
+    }, [id, values, email])
 
     function addComment() {
         return

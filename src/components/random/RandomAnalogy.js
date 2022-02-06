@@ -36,14 +36,14 @@ const RandomAnalogy = ({ email }) => {
   }
 
   useEffect(() => { 
-    generate();
-}, [])
+      generate();
+  }, [])
 
   return (
     <div className='random-container'>
         <div className='analogy-example'>
             {analogyID
-            ? <DisplayAnalogy id='-Mv57uhOvSQ8TCQmSVFv' email={email} />
+            ? <DisplayAnalogy id={analogyID} email={email} />
             : <></>
             }
         </div>

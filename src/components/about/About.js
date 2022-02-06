@@ -1,9 +1,33 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import './About.css'
 import DisplayAnalogy from '../analogy/display/DisplayAnalogy'
+import { firebase  } from '../firebase/InitFirebase';
+
+const db = firebase.database()
 
 const About = ({ email }) => {
+
+  const [analogyID, setAnalogyID] = useState(null);
+  const analogiesRef = db.ref(`analogies`);
+
+  useEffect(() => { 
+    async function fetchDatabase() {
+      let _dataset = await analogiesRef.once('value');
+      let _snapshot =  _dataset.val();
+      let _chosen_id = Object.keys(_snapshot)[0]
+      let _max_voted = -1000000
+      
+      for (const [analogyID, analogyValues] of Object.entries(_snapshot)) {
+        if (analogyValues.votes.length - 1 > _max_voted) {
+          _max_voted = analogyValues.votes.length - 1;
+          _chosen_id = analogyID
+        }
+      }
+      setAnalogyID(_chosen_id)
+    }
+    fetchDatabase();
+  }, [analogiesRef])
 
   return (
     <div className='about-container'>
@@ -21,8 +45,10 @@ const About = ({ email }) => {
           Our goal is to use data to make sense of the world, and in particular -- allow computers to augment human cognition in novel ways.
         </div>
         <div className='analogy-example'>
-            {/* TODO: display the analogy with the most votes */}
-            <DisplayAnalogy id='-Mv57uhOvSQ8TCQmSVFv' email={email} />
+            {analogyID
+            ? <DisplayAnalogy id={analogyID} email={email} />
+            : <></>
+            }
         </div>
     </div>
   );
