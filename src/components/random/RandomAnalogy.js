@@ -30,6 +30,7 @@ const RandomAnalogy = ({ email }) => {
           setAnalogyID(key)
           break;
         }
+        i++;
       }
     }
     fetchDatabase();
