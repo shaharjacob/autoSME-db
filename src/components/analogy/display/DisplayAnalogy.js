@@ -83,6 +83,8 @@ const DisplayAnalogy = ( {id, values, email} ) => {
           _updateVote();
     }
 
+    const mailTitle = "Report inappropriate content"
+    const mailBody = `Analogy id ${id}`
 
     return (
         <div id='display-analogy-container'>
@@ -93,7 +95,7 @@ const DisplayAnalogy = ( {id, values, email} ) => {
                 </div>
                 <div className='align-right'>
                     <Tooltip title="Report inappropriate content">
-                        <IconButton>
+                        <IconButton onClick={() => window.open(`mailto:shahar.jacob@mail.huji.ac.il?subject=${mailTitle}&body=${mailBody}`)}>
                             <ReportIcon />
                         </IconButton>
                     </Tooltip>
