@@ -126,12 +126,20 @@ const DisplayAnalogy = ( {id, values, email} ) => {
                 })}
             </div>
             <div className='votes-buttons'>
-                <Button onClick={() => updateVote()} sx={{color: voteColor}} startIcon={<ThumbUpAltIcon />}>
-                    Vote
-                </Button>
-                <Button onClick={() => addComment()} sx={{color: "#646464"}} startIcon={<MessageIcon />} disabled>
-                    Comment
-                </Button>
+                <Tooltip title={email === "" ? "You should login first" : ""}>
+                    <span>
+                        <Button onClick={() => updateVote()} sx={{color: voteColor}} startIcon={<ThumbUpAltIcon />} disabled={email === "" ? true : false}>
+                            Vote
+                        </Button>
+                    </span>
+                </Tooltip>
+                <Tooltip title="Not available yet">
+                    <span>
+                        <Button onClick={() => addComment()} sx={{color: "#646464"}} startIcon={<MessageIcon />} disabled={true}>
+                            Comment
+                        </Button>
+                    </span>
+                </Tooltip>
             </div>
             <div className='references'>
                 <span className='references-title'>References:</span> 

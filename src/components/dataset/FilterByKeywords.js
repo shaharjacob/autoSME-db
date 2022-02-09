@@ -43,8 +43,18 @@ const FilterByKeywords = ({ options, setFilteredDatabase, origDatabase, setFilte
             options: options,
             getOptionLabel: (option) => option.label,
             isOptionEqualToValue: (option, value) => option.label === value.label,
-            onChange: (event, val) => onChooseKeyword(event, val)
+            onChange: (event, val) => onChooseKeyword(event, val),
       });
+
+    function isThereValue() {
+        let element = document.getElementById('search-by-keywords') 
+        if (element) {
+            if (element.value.length > 0) {
+                return true
+            }
+        }
+        return false
+    }
 
 
     return (
@@ -56,7 +66,7 @@ const FilterByKeywords = ({ options, setFilteredDatabase, origDatabase, setFilte
                 ))}
                 <input {...getInputProps()} />
             </div>
-            {groupedOptions.length > 0 
+            {groupedOptions.length > 0
             ? 
                 <div className='listbox' {...getListboxProps()}>
                     {groupedOptions.map((option, index) => (
@@ -66,7 +76,10 @@ const FilterByKeywords = ({ options, setFilteredDatabase, origDatabase, setFilte
                         </li>
                     ))}
                 </div>
-            :  <></>
+            :  
+                isThereValue()
+                ?   <>No results found</>
+                :   <></>
             }
         </div>
     );
