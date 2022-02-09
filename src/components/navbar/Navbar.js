@@ -136,8 +136,8 @@ const Navbar = ( { user, setUser, setEmail } ) => {
           </Popper>
         </div>
         <div className='grid-logo'>
-          <a href="http://www.hyadatalab.com/" style={{textDecoration: "none"}} rel="noreferrer" target="_blank">
-            <img src={Logo} className='logo' alt="hyadata lab" />
+          <a href="http://www.google.com/" style={{textDecoration: "none"}} rel="noreferrer" target="_blank">
+            <img src="" className='logo' alt="Deleted for anonymity" />
           </a>
         </div>
         <div></div>
