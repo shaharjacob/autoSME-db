@@ -18,11 +18,18 @@ const FilterByKeywords = ({ options, setFilteredDatabase, origDatabase, setFilte
         let _filtered_database_by_keywords = {}
         let _filtered_database = {}
         let _ids = new Set()
-        for (let i = 0; i < val.length; i++) {
-            for (let j = 0; j < val[i].analogies.length; j++) {
-                _ids.add(val[i].analogies[j])
-            }
+        for (let j = 0; j < val[0].analogies.length; j++) {
+            _ids.add(val[0].analogies[j])
         }
+        
+        for (let i = 1; i < val.length; i++) {
+            let _new_ids = new Set()
+            for (let j = 0; j < val[i].analogies.length; j++) {
+                _new_ids.add(val[i].analogies[j])
+            }
+            _ids = new Set([..._ids].filter(k => _new_ids.has(k)));
+        }
+        
         for (const [k, v] of Object.entries(origDatabase)) {
             if (_ids.has(k)) {
                 _filtered_database_by_keywords[k] = v
