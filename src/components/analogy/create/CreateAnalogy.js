@@ -55,15 +55,14 @@ const CreateAnalogy = ( { email } ) => {
             actual_target.push(target[i])
         }
 
-        let references_as_string = document.getElementById("standard-adornment-references").value
-        let references = [""]
-        if (references_as_string !== "" && references_as_string !== null && references_as_string !== undefined ) {
-            let references_without_trim = references_as_string.split(",");
-            for (let i = 0; i < references_without_trim.length; i++) {
-                references.push(references_without_trim[i].trim())
+        let sources_as_string = document.getElementById("standard-adornment-sources").value
+        let sources = [""]
+        if (sources_as_string !== "" && sources_as_string !== null && sources_as_string !== undefined ) {
+            let sources_without_trim = sources_as_string.split(",");
+            for (let i = 0; i < sources_without_trim.length; i++) {
+                sources.push(sources_without_trim[i].trim())
             }
         }
-
 
         const newAnalogyRef = analogiesRef.push();
         newAnalogyRef.set({
@@ -71,13 +70,14 @@ const CreateAnalogy = ( { email } ) => {
             target: actual_target,
             creator: email,
             votes: [""],
-            references: references
+            sources: sources,
+            comments: [""]
         })
         setOpenSnackbar(true)
         setBase(["", "", "", "", "", "", "", "", "", ""])
         setTarget(["", "", "", "", "", "", "", "", "", ""])
         setAnalogyLength(2)
-        document.getElementById("standard-adornment-references").value = ""
+        document.getElementById("standard-adornment-sources").value = ""
     }
 
     const handleCloseSnackbar = (event, reason) => {
@@ -113,10 +113,10 @@ const CreateAnalogy = ( { email } ) => {
             </div>
             <div>
             <FormControl fullWidth variant="standard">
-                <InputLabel htmlFor="standard-adornment-references">References (Optional)</InputLabel>
+                <InputLabel htmlFor="standard-adornment-sources">Sources (Optional)</InputLabel>
                 <Input
-                    id="standard-adornment-references"
-                    placeholder='For multiple references seperate by comma'
+                    id="standard-adornment-sources"
+                    placeholder='For multiple sources seperate by comma'
                 />
             </FormControl>
             </div>

@@ -57,14 +57,14 @@ const DisplayDataset = ({ email }) => {
                     _keywords[analogyValues.target[i]].push(analogyID)
                 }
                 
-                // references keywords (for example 'green eval')
-                for (let i = 0; i < analogyValues.references.length; i++) {
+                // sources keywords (for example 'green eval')
+                for (let i = 0; i < analogyValues.sources.length; i++) {
                     // the first value should be empty because of firebase issue with empty arrays..
-                    if (analogyValues.references[i] !== "" && analogyValues.references[i] !== null && analogyValues.references[i] !== undefined) {
-                        if (!(analogyValues.references[i] in _keywords)) {
-                            _keywords[analogyValues.references[i]] = []
+                    if (analogyValues.sources[i] !== "" && analogyValues.sources[i] !== null && analogyValues.sources[i] !== undefined) {
+                        if (!(analogyValues.sources[i] in _keywords)) {
+                            _keywords[analogyValues.sources[i]] = []
                         }
-                        _keywords[analogyValues.references[i]].push(analogyID)
+                        _keywords[analogyValues.sources[i]].push(analogyID)
                     } 
                 }
             }
@@ -191,7 +191,7 @@ const DisplayDataset = ({ email }) => {
             {Object.entries(filteredDatabase).map(([id, val]) => {
                 return (
                     <div key={id}>
-                        <DisplayAnalogy id={id} values={val} email={email} />
+                        <DisplayAnalogy id={id} values={val} email={email} showComments={false} />
                     </div>
                 )
             })}

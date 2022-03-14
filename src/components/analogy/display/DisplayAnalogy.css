@@ -64,21 +64,40 @@
     margin-top: 10px;
 }
 
-.references {
+.sources {
     text-align: left;
     font-size: 11px;
     padding-top: 13px;
     padding-bottom: 6px;
 }
 
-.references-title {
+.sources-title {
     color: #868686;
     font-weight: 600;
 }
 
-.references-content {
+.sources-content {
     color: #646464;
     padding-left: 5px;
+}
+
+.comment {
+    text-align: left;
+    font-size: 11px;
+    padding-top: 13px;
+    padding-bottom: 10px;
+    padding-left: 5px;
+}
+
+.comment-content {
+    color: #646464;
+    padding-bottom: 2px;
+}
+
+.comment-creator {
+    color: #969696;
+    font-size: 8px;
+    padding-top: 2px;
 }
 
 .comments-icon:hover {

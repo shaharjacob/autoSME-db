@@ -19,7 +19,7 @@ const DisplayAnalogyWrapper = ({ email }) => {
     <div className='display-analogy-wrapper-container'>
         {analogyID !== ""
         ?
-            <DisplayAnalogy id={analogyID} email={email} />
+            <DisplayAnalogy id={analogyID} email={email} showComments={true} />
         :
             <></>
         }

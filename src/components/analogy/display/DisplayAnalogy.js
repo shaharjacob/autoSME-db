@@ -18,7 +18,7 @@ import { firebase  } from '../../firebase/InitFirebase';
 
 const db = firebase.database()
 
-const DisplayAnalogy = ( {id, values, email} ) => {
+const DisplayAnalogy = ( {id, values, email, showComments} ) => {
 
     const [base, setBase] = useState([])
     const [target, setTarget] = useState([])
@@ -33,9 +33,9 @@ const DisplayAnalogy = ( {id, values, email} ) => {
     function setStates(obj) {
         setBase(obj.base);
         setTarget(obj.target);
-        setLabels(obj.references);
+        setLabels(obj.sources);
         setVotes(obj.votes.length - 1); // -1 because of empty value in db
-        setComments(obj.comments ? obj.comments : [])
+        setComments(obj.comments.slice(1))
         if (obj.votes.includes(email)) {
             setVoteColor("#0c6e11")
         }
@@ -72,15 +72,17 @@ const DisplayAnalogy = ( {id, values, email} ) => {
         if (!comments) {
             comments = []
         }
-        comments.push({
+        let comment = {
             user: email,
             comment: currentComment
-        })
+        }
+        comments.push(comment)
         elementFromDB.ref.update({
             comments: comments
         });
         document.getElementById(id).style.display = 'none'
         setCurrentComment("")
+        setComments(prevState => [...prevState, comment])
         setOpenSnackbar(true);
     }
 
@@ -132,6 +134,19 @@ const DisplayAnalogy = ( {id, values, email} ) => {
 
     return (
         <div id='display-analogy-container'>
+            <Snackbar 
+                open={openSnackbar} 
+                autoHideDuration={5000} 
+                onClose={handleCloseSnackbar}
+                anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "center"
+                }}
+            >
+                <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: '100%' }}>
+                    Comment sent successfully!
+                </Alert>
+            </Snackbar>
             <div className='top'>
                 <div className='align-left'>
                     <span>
@@ -226,24 +241,27 @@ const DisplayAnalogy = ( {id, values, email} ) => {
                     <Button sx={{marginTop: '15px'}} onClick={() => addComment()} variant="contained" startIcon={<SendIcon />} >
                         Send
                     </Button>
-                    <Snackbar 
-                        open={openSnackbar} 
-                        autoHideDuration={5000} 
-                        onClose={handleCloseSnackbar}
-                        anchorOrigin={{
-                            vertical: "top",
-                            horizontal: "center"
-                        }}
-                    >
-                        <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: '100%' }}>
-                            Comment sent successfully!
-                        </Alert>
-                    </Snackbar>
                 </div>
             </div>
-            <div className='references'>
-                <span className='references-title'>References:</span> 
-                <span className='references-content'>
+            {showComments
+            ?
+                <>
+                    {comments.map((val, idx) => {
+                        // TODO: option to remove comments
+                        return (
+                            <div key={`comments_${idx}`} className='comment border-bottom'>
+                                <div className='comment-content'>{val.comment}</div>
+                                <div className='comment-creator'>By {val.user}</div>
+                            </div>
+                        )
+                    })}
+                </>
+            : 
+                <></>
+            }
+            <div className='sources'>
+                <span className='sources-title'>Sources:</span> 
+                <span className='sources-content'>
                     {labels.map((val, index) => {
                         return (
                             <span key={`${val}_${index}`}>
