@@ -36,7 +36,7 @@ const DisplayAnalogy = ( {id, values, email, showComments} ) => {
         setLabels(obj.sources);
         setVotes(obj.votes.length - 1); // -1 because of empty value in db
         setComments(obj.comments.slice(1))
-        if (obj.votes.includes(email)) {
+        if (email !== "" && email !== undefined && email !== null && obj.votes.includes(email)) {
             setVoteColor("#0c6e11")
         }
     }
