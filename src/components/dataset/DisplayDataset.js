@@ -190,7 +190,7 @@ const DisplayDataset = ({ email }) => {
             </div>
             {Object.entries(filteredDatabase).map(([id, val]) => {
                 return (
-                    <div key={id} className='analogy-entry'>
+                    <div key={id}>
                         <DisplayAnalogy id={id} values={val} email={email} />
                     </div>
                 )

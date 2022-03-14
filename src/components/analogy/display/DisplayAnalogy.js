@@ -1,12 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, forwardRef } from 'react';
 
 import Button from '@mui/material/Button';
+import MuiAlert from '@mui/material/Alert';
 import Tooltip from '@mui/material/Tooltip';
+import Snackbar from '@mui/material/Snackbar';
+import SendIcon from '@mui/icons-material/Send';
 import IconButton from '@mui/material/IconButton';
 import LaunchIcon from '@mui/icons-material/Launch';
 import ReportIcon from '@mui/icons-material/Report';
 import MessageIcon from '@mui/icons-material/Message';
+import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
+import TextareaAutosize from '@mui/material/TextareaAutosize'
 
 import './DisplayAnalogy.css'
 import { firebase  } from '../../firebase/InitFirebase';
@@ -20,12 +25,17 @@ const DisplayAnalogy = ( {id, values, email} ) => {
     const [votes, setVotes] = useState(0)
     const [voteColor, setVoteColor] = useState("#646464")
     const [labels, setLabels] = useState([""])
+    const [openSnackbar, setOpenSnackbar] = useState(false);
+    const [comments, setComments] = useState([])
+    const [currentComment, setCurrentComment] = useState("")
+    const analogiesRef = db.ref(`analogies/${id}`);
     
     function setStates(obj) {
         setBase(obj.base);
         setTarget(obj.target);
         setLabels(obj.references);
         setVotes(obj.votes.length - 1); // -1 because of empty value in db
+        setComments(obj.comments ? obj.comments : [])
         if (obj.votes.includes(email)) {
             setVoteColor("#0c6e11")
         }
@@ -37,7 +47,6 @@ const DisplayAnalogy = ( {id, values, email} ) => {
         }
         else {
             async function fetchDatabaseWithID() {
-                const analogiesRef = db.ref(`analogies/${id}`);
                 let elementFromDB = await analogiesRef.once('value');
                 let snapshot =  elementFromDB.val();
                 setStates(snapshot);
@@ -46,9 +55,44 @@ const DisplayAnalogy = ( {id, values, email} ) => {
         }
     }, [id, values, email])
 
-    function addComment() {
-        return
+    function expandComment() {
+        let elem = document.getElementById(id)
+        if (elem.style.display !== 'none') {
+            document.getElementById(id).style.display = 'none'
+        }
+        else {
+            document.getElementById(id).style.display = 'block'
+        }
     }
+
+    async function addComment() {
+        let elementFromDB = await analogiesRef.once('value');
+        let snapshot =  elementFromDB.val();
+        let comments = snapshot.comments;
+        if (!comments) {
+            comments = []
+        }
+        comments.push({
+            user: email,
+            comment: currentComment
+        })
+        elementFromDB.ref.update({
+            comments: comments
+        });
+        document.getElementById(id).style.display = 'none'
+        setCurrentComment("")
+        setOpenSnackbar(true);
+    }
+
+    const handleCloseSnackbar = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+    };
+
+    const Alert = forwardRef(function Alert(props, ref) {
+        return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+    });
 
     function updateVote() {
         if (email === "" || email === null || email === undefined) {
@@ -90,8 +134,26 @@ const DisplayAnalogy = ( {id, values, email} ) => {
         <div id='display-analogy-container'>
             <div className='top'>
                 <div className='align-left'>
-                    <ThumbUpAltIcon color='primary' sx={{ fontSize: 18, paddingTop: '8px', paddingLeft: '8px' }}  /> 
-                    <span style={{fontSize: "12px"}}>{votes}</span>
+                    <span>
+                        <ThumbUpAltIcon 
+                            color='primary' 
+                            sx={{ fontSize: 18, paddingTop: '8px', paddingLeft: '8px' }}  
+                        /> 
+                        <span style={{fontSize: "12px"}}>
+                            {votes}
+                        </span>
+                    </span>
+                    <span>
+                        <ChatBubbleIcon 
+                            onClick={() => window.open(`/analogy?id=${id}`)} 
+                            color='primary' 
+                            sx={{ fontSize: 16, paddingTop: '8px', paddingLeft: '8px', cursor: 'pointer' }}  
+                            className="comments-icon"
+                        /> 
+                        <span style={{fontSize: "12px"}}>
+                            {comments.length}
+                        </span>
+                    </span>
                 </div>
                 <div className='align-right'>
                     <Tooltip title="Report inappropriate content">
@@ -125,21 +187,59 @@ const DisplayAnalogy = ( {id, values, email} ) => {
                     )
                 })}
             </div>
-            <div className='votes-buttons'>
-                <Tooltip title={email === "" ? "You should login first" : ""}>
-                    <span>
-                        <Button onClick={() => updateVote()} sx={{color: voteColor}} startIcon={<ThumbUpAltIcon />} disabled={email === "" ? true : false}>
-                            Vote
-                        </Button>
-                    </span>
-                </Tooltip>
-                <Tooltip title="Not available yet">
-                    <span>
-                        <Button onClick={() => addComment()} sx={{color: "#646464"}} startIcon={<MessageIcon />} disabled={true}>
-                            Comment
-                        </Button>
-                    </span>
-                </Tooltip>
+            <div className='vote-and-comment'>
+                <div className='vote-and-comment-buttons'>
+                    <Tooltip title={email === "" ? "You should login first" : ""}>
+                        <span>
+                            <Button 
+                                onClick={() => updateVote()} 
+                                sx={{color: voteColor}} 
+                                startIcon={<ThumbUpAltIcon />} 
+                                disabled={email === "" ? true : false}
+                            >
+                                Vote
+                            </Button>
+                        </span>
+                    </Tooltip>
+                    <Tooltip title={email === "" ? "You should login first" : ""}>
+                        <span>
+                            <Button 
+                                onClick={() => expandComment()} 
+                                sx={{color: "#646464"}} 
+                                startIcon={<MessageIcon />} 
+                                disabled={email === "" ? true : false}
+                            >
+                                Comment
+                            </Button>
+                        </span>
+                    </Tooltip>
+                </div>
+                <div id={id} style={{display: 'none', paddingTop: '8px', paddingBottom: '10px'}}>
+                    <TextareaAutosize
+                        aria-label="minimum height"
+                        minRows={3}
+                        placeholder="Add your comment here ..."
+                        style={{ width: '90%' }}
+                        onChange={(e) => setCurrentComment(e.target.value)}
+
+                    />
+                    <Button sx={{marginTop: '15px'}} onClick={() => addComment()} variant="contained" startIcon={<SendIcon />} >
+                        Send
+                    </Button>
+                    <Snackbar 
+                        open={openSnackbar} 
+                        autoHideDuration={5000} 
+                        onClose={handleCloseSnackbar}
+                        anchorOrigin={{
+                            vertical: "top",
+                            horizontal: "center"
+                        }}
+                    >
+                        <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: '100%' }}>
+                            Comment sent successfully!
+                        </Alert>
+                    </Snackbar>
+                </div>
             </div>
             <div className='references'>
                 <span className='references-title'>References:</span> 
