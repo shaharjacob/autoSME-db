@@ -15,6 +15,8 @@ const App = () => {
   const [user, setUser] = useState("Guest")
   const [email, setEmail] = useState("")
 
+  // useState with localStorage here...
+
   return (
     <BrowserRouter>
       <div className='container'>

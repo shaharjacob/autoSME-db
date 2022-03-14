@@ -12,6 +12,7 @@ const Logout = ( {setUser, setEmail} ) => {
   const onSuccess = () => {
     setUser("Guest")
     setEmail("")
+    // set localStorage here
     console.log('Logout made successfully!');
     let login_button = document.getElementById('google-login-button')
     let logout_button = document.getElementById('google-logout-button')

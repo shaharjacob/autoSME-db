@@ -13,6 +13,7 @@ const Login = ( {setUser, setEmail} ) => {
   const onSuccess = (res) => {
     setUser(res.profileObj.name)
     setEmail(res.profileObj.email)
+    // set localStorage here
     console.log(`[Login success] currentUser: ${res.profileObj.email}`);
     let login_button = document.getElementById('google-login-button')
     let logout_button = document.getElementById('google-logout-button')
