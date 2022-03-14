@@ -160,7 +160,7 @@ const DisplayAnalogy = ( {id, values, email, showComments} ) => {
                     </span>
                     <span>
                         <ChatBubbleIcon 
-                            onClick={() => window.open(`/analogy?id=${id}`)} 
+                            onClick={() => showComments ? console.log("") : window.open(`/analogy?id=${id}`)} 
                             color='primary' 
                             sx={{ fontSize: 16, paddingTop: '8px', paddingLeft: '8px', cursor: 'pointer' }}  
                             className="comments-icon"
@@ -177,7 +177,7 @@ const DisplayAnalogy = ( {id, values, email, showComments} ) => {
                         </IconButton>
                     </Tooltip>
                     <Tooltip title="Open in a new tab">
-                        <IconButton onClick={() => window.open(`/analogy?id=${id}`)}>
+                        <IconButton onClick={() => window.open(`/analogy?id=${id}`)} disabled={showComments ? true : false}>
                             <LaunchIcon />
                         </IconButton>
                     </Tooltip>
