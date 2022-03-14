@@ -11,6 +11,16 @@
     margin-top: 20px;
 }
 
+.story {
+    margin-bottom: 10px;
+}
+
+.create-analogy-sources {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 @media only screen and (max-width: 978px) {    
     
     #create-analogy-container {

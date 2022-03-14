@@ -11,7 +11,7 @@ import ReportIcon from '@mui/icons-material/Report';
 import MessageIcon from '@mui/icons-material/Message';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
-import TextareaAutosize from '@mui/material/TextareaAutosize'
+import TextareaAutosize from '@mui/material/TextareaAutosize';
 
 import './DisplayAnalogy.css'
 import { firebase  } from '../../firebase/InitFirebase';
@@ -22,6 +22,7 @@ const DisplayAnalogy = ( {id, values, email, showComments} ) => {
 
     const [base, setBase] = useState([])
     const [target, setTarget] = useState([])
+    const [story, setStory] = useState({base: "", target: ""})
     const [votes, setVotes] = useState(0)
     const [voteColor, setVoteColor] = useState("#646464")
     const [labels, setLabels] = useState([""])
@@ -36,6 +37,7 @@ const DisplayAnalogy = ( {id, values, email, showComments} ) => {
         setLabels(obj.sources);
         setVotes(obj.votes.length - 1); // -1 because of empty value in db
         setComments(obj.comments.slice(1))
+        setStory(obj.story)
         if (email !== "" && email !== undefined && email !== null && obj.votes.includes(email)) {
             setVoteColor("#0c6e11")
         }
@@ -183,6 +185,26 @@ const DisplayAnalogy = ( {id, values, email, showComments} ) => {
                     </Tooltip>
                 </div>
             </div>
+            {console.log(story)}
+            {story.base !== ""
+            ?  
+                <div className='display-analogy-story border-bottom'>
+                    <div className='display-analogy-story-title'>
+                        Story 1:
+                    </div>
+                    <div className='display-analogy-story-content'>
+                        {story.base}
+                    </div>
+                    <div className='display-analogy-story-title'>
+                        Story 2:
+                    </div>
+                    <div className='display-analogy-story-content'>
+                        {story.target}
+                    </div>
+                </div>
+            : 
+                <></>
+            }
             <div className='display-analogy-unit'>
                 {base.map((b, idx) => {
                     return (

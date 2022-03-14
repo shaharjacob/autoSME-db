@@ -9,11 +9,13 @@ import SendIcon from '@mui/icons-material/Send';
 import IconButton from '@mui/material/IconButton';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
+import TextareaAutosize from '@mui/material/TextareaAutosize';
 
 import './CreateAnalogy.css'
 import { firebase  } from '../../firebase/InitFirebase';
 import BaseTargetPair from './BaseTargetPair'
 import { isNull } from '../../../utils'
+import { TextField } from '@mui/material';
 
 const db = firebase.database()
 
@@ -24,6 +26,8 @@ const CreateAnalogy = ( { email } ) => {
     const [analogyLength, setAnalogyLength] = useState(2)
     const analogiesRef = db.ref("analogies");
     const [openSnackbar, setOpenSnackbar] = useState(false);
+    const [story1, setStory1] = useState("")
+    const [story2, setStory2] = useState("")
 
     function onAddEntry() {
         setAnalogyLength((prevState) => prevState + 1)
@@ -39,6 +43,14 @@ const CreateAnalogy = ( { email } ) => {
                 alert(`target[${i}] is empty!`)
                 return false
             }
+        }
+        if (story1 !== "" && story2 === "") {
+            alert("You should add story for the second domain (or remove the story from the first domain)")
+            return false
+        }
+        if (story1 === "" && story2 !== "") {
+            alert("You should add story for the first domain (or remove the story from the second domain)")
+            return false
         }
         return true
     }
@@ -66,6 +78,10 @@ const CreateAnalogy = ( { email } ) => {
 
         const newAnalogyRef = analogiesRef.push();
         newAnalogyRef.set({
+            story: {
+                base: story1,
+                target: story2
+            },
             base: actual_base,
             target: actual_target,
             creator: email,
@@ -94,6 +110,24 @@ const CreateAnalogy = ( { email } ) => {
     return (
         <div>
         <div id='create-analogy-container'>
+            <div className='story'>
+                <TextField
+                    minRows={5}
+                    label="Story 1 (Optional)"
+                    style={{ width: '90%' }}
+                    onChange={(e) => setStory1(e.target.value)}
+                    multiline
+                />
+            </div>
+            <div className='story'>
+                <TextField
+                    minRows={5}
+                    label="Story 2 (Optional)"
+                    style={{ width: '90%' }}
+                    onChange={(e) => setStory2(e.target.value)}
+                    multiline
+                />
+            </div>
             <div>
                 <BaseTargetPair base={base} setBase={setBase} target={target} setTarget={setTarget} idx={0} analogyLength={analogyLength} setAnalogyLength={setAnalogyLength} />
                 <BaseTargetPair base={base} setBase={setBase} target={target} setTarget={setTarget} idx={1} analogyLength={analogyLength} setAnalogyLength={setAnalogyLength} />
@@ -111,7 +145,7 @@ const CreateAnalogy = ( { email } ) => {
                     <AddIcon variant="outlined" sx={{color: "#315fc4"}} />
                 </IconButton>
             </div>
-            <div>
+            <div className='create-analogy-sources'>
             <FormControl fullWidth variant="standard">
                 <InputLabel htmlFor="standard-adornment-sources">Sources (Optional)</InputLabel>
                 <Input
