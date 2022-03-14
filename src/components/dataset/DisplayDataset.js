@@ -137,6 +137,7 @@ const DisplayDataset = ({ email }) => {
                 <Tooltip title="Download the currently displayed database">
                     <FileDownloadIcon sx={{color: '#868686'}} />
                 </Tooltip>
+                <span style={{fontSize: '9px'}}>Download</span>
             </IconButton>
             <Menu
                 id="basic-menu"
