@@ -114,7 +114,7 @@ const Navbar = ( { user, setUser, setEmail } ) => {
                         </MenuItem>
                       </Link>
 
-                      <Link href="/about" color='inherit' underline='none'>
+                      <Link href="/download" color='inherit' underline='none'>
                         <MenuItem>
                           <ListItemIcon><DownloadIcon fontSize="small" /></ListItemIcon>
                           <ListItemText>Download data</ListItemText>

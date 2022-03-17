@@ -87,6 +87,11 @@ const DisplayDataset = ({ email }) => {
 
     function get_headers_for_csv() {
         let headers = []
+
+        for (let i = 0; i < 2; i++) {
+            headers.push({ label: `Story ${i+1}`, key: `story_${i+1}` })
+        }
+
         // the order is important
         for (let i = 0; i < 10; i++) {
             headers.push({ label: `Base ${i+1}`, key: `base_${i+1}` })
@@ -101,6 +106,10 @@ const DisplayDataset = ({ email }) => {
         let data = []
         for (const [key, value] of Object.entries(filteredDatabase)) {
             let row = {}
+
+            row[`story_1`] = value.story.base;
+            row[`story_2`] = value.story.target;
+
             for (let i = 0; i < 10; i++) {
                 let b = (i < value.base.length) ? value.base[i] : ""
                 row[`base_${i+1}`] = b
@@ -118,6 +127,10 @@ const DisplayDataset = ({ email }) => {
         let data = {}
         for (const [key, value] of Object.entries(filteredDatabase)) {
             data[key] = {}
+            data[key]["story"] = {
+                "base": value.story.base,
+                "target": value.story.target
+            }
             data[key]["base"] = value.base
             data[key]["target"] = value.target
         }
