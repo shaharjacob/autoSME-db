@@ -42,7 +42,7 @@ const RandomAnalogy = ({ email }) => {
 
   return (
     <div className='random-container'>
-        <div className='analogy-example'>
+        <div className='random-analogy'>
             {analogyID
             ? <DisplayAnalogy id={analogyID} email={email} showComments={false} />
             : <></>

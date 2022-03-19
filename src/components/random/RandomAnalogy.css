@@ -9,13 +9,15 @@
 }
 
 .show-next {
-    margin-top: 40px;
+    margin-top: 20px;
 }
 
 @media only screen and (max-width: 978px) {    
     
-    .analogy-example {
-        padding: 60px;
+    .random-analogy {
+        padding-left: 10px;
+        padding-right: 30px;
         padding-top: 20px;
+        padding-bottom: 30px;
     }
   }

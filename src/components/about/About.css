@@ -18,7 +18,7 @@
     line-height: 1.4;
 }
 
-.analogy-example {
+.about-analogy-example {
     padding-top: 40px;
     padding-bottom: 40px;
 }
@@ -36,8 +36,10 @@
         padding-bottom: 0;
     }
     
-    .analogy-example {
-        padding: 60px;
+    .about-analogy-example {
+        padding-left: 10px;
+        padding-right: 30px;
         padding-top: 20px;
+        padding-bottom: 30px;
     }
 }

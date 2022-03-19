@@ -46,7 +46,7 @@ const About = ({ email }) => {
           Hyadata Lab ("Did you know?" in Hebrew) is a research lab within the School of Computer Science and Engineering at the Hebrew University of Jerusalem. 
           Our goal is to use data to make sense of the world, and in particular -- allow computers to augment human cognition in novel ways.
         </div>
-        <div className='analogy-example'>
+        <div className='about-analogy-example'>
             {analogyID
             ? <DisplayAnalogy id={analogyID} email={email} showComments={false} />
             : <></>

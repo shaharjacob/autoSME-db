@@ -43,40 +43,41 @@ const FilterBySize = ({ setFilteredDatabase, origDatabase, setFilteredDatabaseOn
     return (
         <FormControl component="fieldset">
             <FormLabel component="legend">Filter by analogy size</FormLabel>
-            <FormGroup aria-label="position" row>
+            <FormGroup aria-label="position" row={true}>
                 <FormControlLabel
                     control={<Checkbox />}
                     label="2x2"
                     labelPlacement="bottom"
                     onChange={() => onFilterByAnalogySize(0)}
+                    sx={{margin: '10px'}}
                 />
                 <FormControlLabel
-                    id="checkbox-3x3"
                     control={<Checkbox />}
                     label="3x3"
                     labelPlacement="bottom"
                     onChange={() => onFilterByAnalogySize(1)}
+                    sx={{margin: '10px'}}
                 />
                 <FormControlLabel
-                    id="checkbox-4x4"
                     control={<Checkbox />}
                     label="4x4"
                     labelPlacement="bottom"
                     onChange={() => onFilterByAnalogySize(2)}
+                    sx={{margin: '10px'}}
                 />
                 <FormControlLabel
-                    id="checkbox-5x5"
                     control={<Checkbox />}
                     label="5x5"
                     labelPlacement="bottom"
                     onChange={() => onFilterByAnalogySize(3)}
+                    sx={{margin: '10px'}}
                 />
                 <FormControlLabel
-                    id="checkbox-6"
                     control={<Checkbox />}
                     label="6+"
                     labelPlacement="bottom"
                     onChange={() => onFilterByAnalogySize(4)}
+                    sx={{margin: '10px'}}
                 />
             </FormGroup>
         </FormControl>
