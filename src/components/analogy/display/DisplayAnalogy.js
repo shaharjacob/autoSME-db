@@ -4,47 +4,74 @@ import Button from '@mui/material/Button';
 import MuiAlert from '@mui/material/Alert';
 import Tooltip from '@mui/material/Tooltip';
 import Snackbar from '@mui/material/Snackbar';
+import TextField from '@mui/material/TextField';
 import SendIcon from '@mui/icons-material/Send';
+import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 import LaunchIcon from '@mui/icons-material/Launch';
 import ReportIcon from '@mui/icons-material/Report';
 import MessageIcon from '@mui/icons-material/Message';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
-import TextareaAutosize from '@mui/material/TextareaAutosize';
 
 import './DisplayAnalogy.css'
+import { isNull } from '../../../utils'
 import { firebase  } from '../../firebase/InitFirebase';
+import structuredClone from '@ungap/structured-clone';
 
 const db = firebase.database()
 
 const DisplayAnalogy = ( {id, values, email, showComments} ) => {
+    
+    const mailTitle = "Report inappropriate content"
+    const mailBody = `Analogy id ${id}`
 
+    // required db fields
     const [base, setBase] = useState([])
     const [target, setTarget] = useState([])
+    const [creator, setCreator] = useState("")
+
+    // optional db fields
     const [story, setStory] = useState({base: "", target: ""})
-    const [votes, setVotes] = useState(0)
+    const [votes, setVotes] = useState([])
     const [voteColor, setVoteColor] = useState("#646464")
-    const [labels, setLabels] = useState([""])
-    const [openSnackbar, setOpenSnackbar] = useState(false);
+    const [sources, setSources] = useState([""])
     const [comments, setComments] = useState([])
+
+    const [openSnackbar, setOpenSnackbar] = useState(false);
     const [currentComment, setCurrentComment] = useState("")
     const analogiesRef = db.ref(`analogies/${id}`);
-    
-    function setStates(obj) {
-        setBase(obj.base);
-        setTarget(obj.target);
-        setLabels(obj.sources);
-        setVotes(obj.votes.length - 1); // -1 because of empty value in db
-        setComments(obj.comments.slice(1))
-        setStory(obj.story)
-        if (email !== "" && email !== undefined && email !== null && obj.votes.includes(email)) {
-            setVoteColor("#0c6e11")
-        }
-    }
 
     useEffect(() => { 
-        if (values !== null && values !== undefined && Object.keys(values).length > 0) {
+        function setStates(obj) {
+            // required fields
+            setBase(obj.base)
+            setTarget(obj.target)
+            setCreator(obj.creator)
+    
+            // optional fields
+            if (obj.hasOwnProperty("story")) {
+                setStory(obj.story)
+            }
+            if (obj.hasOwnProperty("votes")) {
+                setVotes(obj.votes)
+            }
+            if (obj.hasOwnProperty("sources")) {
+                setSources(obj.sources)
+            }
+            if (obj.hasOwnProperty("comments")) {
+                setComments(obj.comments)
+            }
+            if (!isNull(email)) {
+                if (obj.hasOwnProperty("votes")) {
+                    if (obj.votes.includes(email)) {
+                        setVoteColor("#0c6e11")
+                    }
+                }
+            }
+        }
+        
+        if (!isNull(values) && Object.keys(values).length > 0) {
             setStates(values);
         }
         else {
@@ -69,18 +96,12 @@ const DisplayAnalogy = ( {id, values, email, showComments} ) => {
 
     async function addComment() {
         let elementFromDB = await analogiesRef.once('value');
-        let snapshot =  elementFromDB.val();
-        let comments = snapshot.comments;
-        if (!comments) {
-            comments = []
-        }
         let comment = {
             user: email,
             comment: currentComment
         }
-        comments.push(comment)
         elementFromDB.ref.update({
-            comments: comments
+            comments: [...comments, comment]
         });
         document.getElementById(id).style.display = 'none'
         setCurrentComment("")
@@ -102,23 +123,18 @@ const DisplayAnalogy = ( {id, values, email, showComments} ) => {
         if (email === "" || email === null || email === undefined) {
             return
         }
-        const analogiesRef = db.ref(`analogies/${id}`);
         async function _updateVote() {
             let elementFromDB = await analogiesRef.once('value');
-            let snapshot =  elementFromDB.val();
-            let refVotes = snapshot.votes;
+            let refVotes = structuredClone(votes)
             const refVotesIndex = refVotes.indexOf(email);
-            let votesToAdd = 0
             let color = ""
 
             if (refVotesIndex >= 0) {
                 refVotes.splice(refVotesIndex, 1);
-                votesToAdd = -1
                 color = "#646464"
             }
             else {
                 refVotes.push(email)
-                votesToAdd = 1
                 color = "#0c6e11"
             }
 
@@ -126,19 +142,16 @@ const DisplayAnalogy = ( {id, values, email, showComments} ) => {
                 votes: refVotes
             });
             setVoteColor(color)
-            setVotes((prevState) => prevState + votesToAdd);
+            setVotes(refVotes);
           }
           _updateVote();
     }
-
-    const mailTitle = "Report inappropriate content"
-    const mailBody = `Analogy id ${id}`
 
     return (
         <div id='display-analogy-container'>
             <Snackbar 
                 open={openSnackbar} 
-                autoHideDuration={5000} 
+                autoHideDuration={3000} 
                 onClose={handleCloseSnackbar}
                 anchorOrigin={{
                     vertical: "top",
@@ -157,7 +170,7 @@ const DisplayAnalogy = ( {id, values, email, showComments} ) => {
                             sx={{ fontSize: 18, paddingTop: '8px', paddingLeft: '8px' }}  
                         /> 
                         <span style={{fontSize: "12px"}}>
-                            {votes}
+                            {votes.length}
                         </span>
                     </span>
                     <span>
@@ -183,9 +196,13 @@ const DisplayAnalogy = ( {id, values, email, showComments} ) => {
                             <LaunchIcon />
                         </IconButton>
                     </Tooltip>
+                    <Tooltip title="Edit Analogy">
+                        <IconButton onClick={() => window.open(`/edit?id=${id}`)} disabled={creator !== email ? true : false}>
+                            <EditIcon />
+                        </IconButton>
+                    </Tooltip>
                 </div>
             </div>
-            {console.log(story)}
             {story.base !== ""
             ?  
                 <div className='display-analogy-story border-bottom'>
@@ -252,13 +269,12 @@ const DisplayAnalogy = ( {id, values, email, showComments} ) => {
                     </Tooltip>
                 </div>
                 <div id={id} style={{display: 'none', paddingTop: '8px', paddingBottom: '10px'}}>
-                    <TextareaAutosize
-                        aria-label="minimum height"
-                        minRows={3}
-                        placeholder="Add your comment here ..."
+                    <TextField
+                        minRows={5}
+                        label="Comment"
                         style={{ width: '90%' }}
                         onChange={(e) => setCurrentComment(e.target.value)}
-
+                        multiline
                     />
                     <Button sx={{marginTop: '15px'}} onClick={() => addComment()} variant="contained" startIcon={<SendIcon />} >
                         Send
@@ -284,11 +300,11 @@ const DisplayAnalogy = ( {id, values, email, showComments} ) => {
             <div className='sources'>
                 <span className='sources-title'>Sources:</span> 
                 <span className='sources-content'>
-                    {labels.map((val, index) => {
+                    {sources.map((val, index) => {
                         return (
                             <span key={`${val}_${index}`}>
                                 {val}
-                                {(index === labels.length - 1) || (val === "") ? "" : ", "} 
+                                {(index === sources.length - 1) ? "" : ", "} 
                             </span>
                         )
                     })}

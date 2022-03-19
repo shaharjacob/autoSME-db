@@ -10,6 +10,7 @@ import DisplayDataset from './components/dataset//DisplayDataset';
 import DownloadPage from './components/download//DownloadPage';
 import CreateAnalogyWrapper from './components/analogy/create/CreateAnalogyWrapper';
 import DisplayAnalogyWrapper from './components/analogy/display/DisplayAnalogyWrapper';
+import EditAnalogyWrapper from './components/analogy/edit/EditAnalogyWrapper';
 
 const App = () => {
 
@@ -24,7 +25,6 @@ const App = () => {
       setEmail(email_)
     }
   }, [])
-  // useState with localStorage here...
 
   return (
     <BrowserRouter>
@@ -39,6 +39,7 @@ const App = () => {
             <Route path='/analogy' element={<DisplayAnalogyWrapper email={email} />} />
             <Route path='/dataset' element={<DisplayDataset email={email} />} />
             <Route path='/create' element={<CreateAnalogyWrapper email={email} />} />
+            <Route path='/edit' element={<EditAnalogyWrapper email={email} />} />
             <Route path='/download' element={<DownloadPage email={email} />} />
           </Routes>
           <Background />

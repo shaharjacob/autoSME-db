@@ -13,7 +13,7 @@ const DisplayAnalogyWrapper = ({ email }) => {
   useEffect(() => { 
     let params = new URLSearchParams(location.search)
     setAnalogyID(params.get('id'))
-  }, [email, location])
+  }, [location])
 
   return (
     <div className='display-analogy-wrapper-container'>

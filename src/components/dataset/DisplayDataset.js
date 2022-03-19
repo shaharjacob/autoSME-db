@@ -23,6 +23,7 @@ const DisplayDataset = ({ email }) => {
     const [filteredDatabaseOnlyBySize, setFilteredDatabaseOnlyBySize] = useState({})
     const [filteredDatabaseOnlyByKeywords, setFilteredDatabaseOnlyByKeywords] = useState({})
     const [keywordsToIDs, setKeywordsToIDs] = useState([])
+    const analogiesRef = db.ref("analogies");
 
     // download
     const [anchorEl, setAnchorEl] = useState(null);
@@ -33,7 +34,6 @@ const DisplayDataset = ({ email }) => {
 
 
     useEffect(() => { 
-        const analogiesRef = db.ref("analogies");
         async function fetchDatabase() {
             let _dataset = await analogiesRef.once('value');
             let _snapshot =  _dataset.val()
@@ -58,14 +58,13 @@ const DisplayDataset = ({ email }) => {
                 }
                 
                 // sources keywords (for example 'green eval')
-                for (let i = 0; i < analogyValues.sources.length; i++) {
-                    // the first value should be empty because of firebase issue with empty arrays..
-                    if (analogyValues.sources[i] !== "" && analogyValues.sources[i] !== null && analogyValues.sources[i] !== undefined) {
+                if (analogyValues.hasOwnProperty("sources")) {
+                    for (let i = 0; i < analogyValues.sources.length; i++) {
                         if (!(analogyValues.sources[i] in _keywords)) {
                             _keywords[analogyValues.sources[i]] = []
                         }
                         _keywords[analogyValues.sources[i]].push(analogyID)
-                    } 
+                    }
                 }
             }
             // now we will convert the dictionary to array options format for the keywords search
@@ -104,7 +103,7 @@ const DisplayDataset = ({ email }) => {
 
     function get_data_for_csv() {
         let data = []
-        for (const [key, value] of Object.entries(filteredDatabase)) {
+        for (const value of Object.values(filteredDatabase)) {
             let row = {}
 
             row[`story_1`] = value.story.base;

@@ -5,29 +5,34 @@ import Button from '@mui/material/Button';
 import MuiAlert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 import AddIcon from '@mui/icons-material/Add';
+import TextField from '@mui/material/TextField';
 import SendIcon from '@mui/icons-material/Send';
 import IconButton from '@mui/material/IconButton';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
-import TextareaAutosize from '@mui/material/TextareaAutosize';
 
 import './CreateAnalogy.css'
 import { firebase  } from '../../firebase/InitFirebase';
 import BaseTargetPair from './BaseTargetPair'
 import { isNull } from '../../../utils'
-import { TextField } from '@mui/material';
 
 const db = firebase.database()
+const ANALOGY_MAX_SIZE = 10
 
 const CreateAnalogy = ( { email } ) => {
 
-    const [base, setBase] = useState(["", "", "", "", "", "", "", "", "", ""])
-    const [target, setTarget] = useState(["", "", "", "", "", "", "", "", "", ""])
-    const [analogyLength, setAnalogyLength] = useState(2)
-    const analogiesRef = db.ref("analogies");
-    const [openSnackbar, setOpenSnackbar] = useState(false);
+    // required for db
+    const [base, setBase] = useState(Array(ANALOGY_MAX_SIZE).fill(""))
+    const [target, setTarget] = useState(Array(ANALOGY_MAX_SIZE).fill(""))
+
+    // optional for db
     const [story1, setStory1] = useState("")
     const [story2, setStory2] = useState("")
+    const [sourcesAsString, setSourcesAsString] = useState("")
+
+    const [analogyLength, setAnalogyLength] = useState(2)
+    const [openSnackbar, setOpenSnackbar] = useState(false);
+    const analogiesRef = db.ref("analogies")
 
     function onAddEntry() {
         setAnalogyLength((prevState) => prevState + 1)
@@ -67,33 +72,35 @@ const CreateAnalogy = ( { email } ) => {
             actual_target.push(target[i])
         }
 
-        let sources_as_string = document.getElementById("standard-adornment-sources").value
-        let sources = [""]
-        if (sources_as_string !== "" && sources_as_string !== null && sources_as_string !== undefined ) {
-            let sources_without_trim = sources_as_string.split(",");
+        let sources = []
+        if (!isNull(sourcesAsString)) {
+            let sources_without_trim = sourcesAsString.split(",");
             for (let i = 0; i < sources_without_trim.length; i++) {
                 sources.push(sources_without_trim[i].trim())
             }
         }
 
-        const newAnalogyRef = analogiesRef.push();
-        newAnalogyRef.set({
+        let new_analogy = {
+            base: actual_base,
+            target: actual_target,
+            creator: email,
             story: {
                 base: story1,
                 target: story2
             },
-            base: actual_base,
-            target: actual_target,
-            creator: email,
-            votes: [""],
-            sources: sources,
-            comments: [""]
-        })
+        }
+
+        if (sources.length > 0) {
+            new_analogy["sources"] = sources
+        }
+
+        const newAnalogyRef = analogiesRef.push();
+        newAnalogyRef.set(new_analogy)
         setOpenSnackbar(true)
-        setBase(["", "", "", "", "", "", "", "", "", ""])
-        setTarget(["", "", "", "", "", "", "", "", "", ""])
+        setBase(Array(ANALOGY_MAX_SIZE).fill(""))
+        setTarget(Array(ANALOGY_MAX_SIZE).fill(""))
         setAnalogyLength(2)
-        document.getElementById("standard-adornment-sources").value = ""
+        setSourcesAsString("")
     }
 
     const handleCloseSnackbar = (event, reason) => {
@@ -109,70 +116,71 @@ const CreateAnalogy = ( { email } ) => {
     
     return (
         <div>
-        <div id='create-analogy-container'>
-            <div className='story'>
-                <TextField
-                    minRows={5}
-                    label="Story 1 (Optional)"
-                    style={{ width: '90%' }}
-                    onChange={(e) => setStory1(e.target.value)}
-                    multiline
-                />
+            <div id='create-analogy-container'>
+                <div className='story'>
+                    <TextField
+                        minRows={5}
+                        label="Story 1 (Optional)"
+                        style={{ width: '90%' }}
+                        onChange={(e) => setStory1(e.target.value)}
+                        multiline
+                    />
+                </div>
+                <div className='story'>
+                    <TextField
+                        minRows={5}
+                        label="Story 2 (Optional)"
+                        style={{ width: '90%' }}
+                        onChange={(e) => setStory2(e.target.value)}
+                        multiline
+                    />
+                </div>
+                <div>
+                    <BaseTargetPair base={base} setBase={setBase} target={target} setTarget={setTarget} idx={0} analogyLength={analogyLength} setAnalogyLength={setAnalogyLength} />
+                    <BaseTargetPair base={base} setBase={setBase} target={target} setTarget={setTarget} idx={1} analogyLength={analogyLength} setAnalogyLength={setAnalogyLength} />
+                    <BaseTargetPair base={base} setBase={setBase} target={target} setTarget={setTarget} idx={2} analogyLength={analogyLength} setAnalogyLength={setAnalogyLength} />
+                    <BaseTargetPair base={base} setBase={setBase} target={target} setTarget={setTarget} idx={3} analogyLength={analogyLength} setAnalogyLength={setAnalogyLength} />
+                    <BaseTargetPair base={base} setBase={setBase} target={target} setTarget={setTarget} idx={4} analogyLength={analogyLength} setAnalogyLength={setAnalogyLength} />
+                    <BaseTargetPair base={base} setBase={setBase} target={target} setTarget={setTarget} idx={5} analogyLength={analogyLength} setAnalogyLength={setAnalogyLength} />
+                    <BaseTargetPair base={base} setBase={setBase} target={target} setTarget={setTarget} idx={6} analogyLength={analogyLength} setAnalogyLength={setAnalogyLength} />
+                    <BaseTargetPair base={base} setBase={setBase} target={target} setTarget={setTarget} idx={7} analogyLength={analogyLength} setAnalogyLength={setAnalogyLength} />
+                    <BaseTargetPair base={base} setBase={setBase} target={target} setTarget={setTarget} idx={8} analogyLength={analogyLength} setAnalogyLength={setAnalogyLength} />
+                    <BaseTargetPair base={base} setBase={setBase} target={target} setTarget={setTarget} idx={9} analogyLength={analogyLength} setAnalogyLength={setAnalogyLength} />
+                </div>
+                <div>
+                    <IconButton onClick={() => onAddEntry()}>
+                        <AddIcon variant="outlined" sx={{color: "#315fc4"}} />
+                    </IconButton>
+                </div>
+                <div className='create-analogy-sources'>
+                <FormControl fullWidth variant="standard">
+                    <InputLabel htmlFor="standard-adornment-sources">Sources (Optional)</InputLabel>
+                    <Input
+                        id="standard-adornment-sources"
+                        placeholder='For multiple sources seperate by comma'
+                        onChange={(e) => setSourcesAsString(e.target.value)}
+                    />
+                </FormControl>
+                </div>
             </div>
-            <div className='story'>
-                <TextField
-                    minRows={5}
-                    label="Story 2 (Optional)"
-                    style={{ width: '90%' }}
-                    onChange={(e) => setStory2(e.target.value)}
-                    multiline
-                />
+            <div className='submit-button'>
+                <Button onClick={() => onCreateAnalogy()} variant="contained" startIcon={<SendIcon />} >
+                    Create
+                </Button>
+                <Snackbar 
+                    open={openSnackbar} 
+                    autoHideDuration={3000} 
+                    onClose={handleCloseSnackbar}
+                    anchorOrigin={{
+                        vertical: "top",
+                        horizontal: "center"
+                    }}
+                >
+                    <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: '100%' }}>
+                        Analogy created successfully!
+                    </Alert>
+                </Snackbar>
             </div>
-            <div>
-                <BaseTargetPair base={base} setBase={setBase} target={target} setTarget={setTarget} idx={0} analogyLength={analogyLength} setAnalogyLength={setAnalogyLength} />
-                <BaseTargetPair base={base} setBase={setBase} target={target} setTarget={setTarget} idx={1} analogyLength={analogyLength} setAnalogyLength={setAnalogyLength} />
-                <BaseTargetPair base={base} setBase={setBase} target={target} setTarget={setTarget} idx={2} analogyLength={analogyLength} setAnalogyLength={setAnalogyLength} />
-                <BaseTargetPair base={base} setBase={setBase} target={target} setTarget={setTarget} idx={3} analogyLength={analogyLength} setAnalogyLength={setAnalogyLength} />
-                <BaseTargetPair base={base} setBase={setBase} target={target} setTarget={setTarget} idx={4} analogyLength={analogyLength} setAnalogyLength={setAnalogyLength} />
-                <BaseTargetPair base={base} setBase={setBase} target={target} setTarget={setTarget} idx={5} analogyLength={analogyLength} setAnalogyLength={setAnalogyLength} />
-                <BaseTargetPair base={base} setBase={setBase} target={target} setTarget={setTarget} idx={6} analogyLength={analogyLength} setAnalogyLength={setAnalogyLength} />
-                <BaseTargetPair base={base} setBase={setBase} target={target} setTarget={setTarget} idx={7} analogyLength={analogyLength} setAnalogyLength={setAnalogyLength} />
-                <BaseTargetPair base={base} setBase={setBase} target={target} setTarget={setTarget} idx={8} analogyLength={analogyLength} setAnalogyLength={setAnalogyLength} />
-                <BaseTargetPair base={base} setBase={setBase} target={target} setTarget={setTarget} idx={9} analogyLength={analogyLength} setAnalogyLength={setAnalogyLength} />
-            </div>
-            <div>
-                <IconButton onClick={() => onAddEntry()}>
-                    <AddIcon variant="outlined" sx={{color: "#315fc4"}} />
-                </IconButton>
-            </div>
-            <div className='create-analogy-sources'>
-            <FormControl fullWidth variant="standard">
-                <InputLabel htmlFor="standard-adornment-sources">Sources (Optional)</InputLabel>
-                <Input
-                    id="standard-adornment-sources"
-                    placeholder='For multiple sources seperate by comma'
-                />
-            </FormControl>
-            </div>
-        </div>
-        <div className='submit-button'>
-            <Button onClick={() => onCreateAnalogy()} variant="contained" startIcon={<SendIcon />} >
-                Create
-            </Button>
-            <Snackbar 
-                open={openSnackbar} 
-                autoHideDuration={5000} 
-                onClose={handleCloseSnackbar}
-                anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "center"
-                }}
-            >
-                <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: '100%' }}>
-                    Analogy created successfully!
-                </Alert>
-            </Snackbar>
-        </div>
         </div>
     );
 }

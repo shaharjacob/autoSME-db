@@ -19,15 +19,17 @@ const About = ({ email }) => {
       let _max_voted = -1000000
       
       for (const [analogyID, analogyValues] of Object.entries(_snapshot)) {
-        if (analogyValues.votes.length - 1 > _max_voted) {
-          _max_voted = analogyValues.votes.length - 1;
-          _chosen_id = analogyID
+        if (analogyValues.hasOwnProperty("votes")) {
+          if (analogyValues.votes.length > _max_voted) {
+            _max_voted = analogyValues.votes.length;
+            _chosen_id = analogyID
+          }
         }
       }
       setAnalogyID(_chosen_id)
     }
     fetchDatabase();
-  }, [analogiesRef])
+  }, [])
 
   return (
     <div className='about-container'>
