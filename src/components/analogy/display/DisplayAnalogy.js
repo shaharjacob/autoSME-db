@@ -192,14 +192,18 @@ const DisplayAnalogy = ( {id, values, email, showComments} ) => {
                         </IconButton>
                     </Tooltip>
                     <Tooltip title="Open in a new tab">
-                        <IconButton onClick={() => window.open(`/analogy?id=${id}`)} disabled={showComments ? true : false}>
-                            <LaunchIcon />
-                        </IconButton>
+                        <span>
+                            <IconButton onClick={() => window.open(`/analogy?id=${id}`)} disabled={showComments ? true : false}>
+                                <LaunchIcon />
+                            </IconButton>
+                        </span>
                     </Tooltip>
                     <Tooltip title="Edit Analogy">
-                        <IconButton onClick={() => window.open(`/edit?id=${id}`)} disabled={creator !== email ? true : false}>
-                            <EditIcon />
-                        </IconButton>
+                        <span>
+                            <IconButton onClick={() => window.open(`/edit?id=${id}`)} disabled={creator !== email ? true : false}>
+                                <EditIcon />
+                            </IconButton>
+                        </span>
                     </Tooltip>
                 </div>
             </div>
