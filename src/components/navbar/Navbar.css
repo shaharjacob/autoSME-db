@@ -41,12 +41,7 @@
 
 @media only screen and (max-width: 978px) {
     .navbar-container {
-        grid-template-columns: 0.03fr 0.22fr 0.7fr 1fr;
-    }
-
-    .open-menu {
-        padding-bottom: 10px;
-        padding-right: 12px;
+        grid-template-columns: 0.03fr 0.22fr 0.3fr 1fr;
     }
     
     .logo {
@@ -57,18 +52,13 @@
         padding-left: 10px;
         padding-top: 15px;
     }
-    
+
     .right-side {
-        padding-bottom: 10px;
-        text-align: right;
-        display: flex;
-        justify-content: right;
+        padding-right: 0;
     }
     
     .hello-user {
-        color: rgb(43, 43, 43);
         margin-right: 10px;
-        margin-top: 22px;
         font-size: 14px;
     }
   }
