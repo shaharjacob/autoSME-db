@@ -2,3 +2,13 @@
     margin-top: 10px;
     display: block;
 }
+
+.login-logout-text {
+    font-size: 12px;
+}
+
+@media only screen and (max-width: 978px) {
+    .login-logout-text {
+        font-size: 8px;
+    }
+  }

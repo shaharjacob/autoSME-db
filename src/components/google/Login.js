@@ -1,6 +1,8 @@
 import React from 'react';
 
 import { GoogleLogin } from 'react-google-login'
+import LoginIcon from '@mui/icons-material/Login';
+import IconButton from '@mui/material/IconButton';
 
 import { refreshTokenSetup } from './RefreshToken'
 import './Login.css'
@@ -38,7 +40,15 @@ const Login = ( {setUser, setEmail} ) => {
     <div id='google-login-button'>
       <GoogleLogin 
         clientId={clientId}
-        buttonText='Login'
+        render={renderProps => (
+          <IconButton 
+            sx={{flexDirection: 'column'}}
+            onClick={renderProps.onClick}
+          >
+            <LoginIcon sx={{color: '#0c6e11'}} />
+            <span className="login-logout-text">Login</span>
+          </IconButton>
+        )}
         onSuccess={onSuccess}
         onFailure={onFailure}
         cookiePolicy={'single_host_origin'}

@@ -1,8 +1,11 @@
 import React from 'react';
 
 import { GoogleLogout } from 'react-google-login'
+import IconButton from '@mui/material/IconButton';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 import './Logout.css'
+import './Login.css'
 
 const clientId = `${process.env.REACT_APP_GOOGLE_CLIENT_ID}.apps.googleusercontent.com`
 
@@ -28,7 +31,15 @@ const Logout = ( {setUser, setEmail} ) => {
     <div id='google-logout-button'>
       <GoogleLogout 
         clientId={clientId}
-        buttonText="Logout"
+        render={renderProps => (
+          <IconButton 
+            sx={{flexDirection: 'column'}}
+            onClick={renderProps.onClick}
+          >
+            <LogoutIcon sx={{color: '#9b1515'}} />
+            <span className="login-logout-text">Logout</span>
+          </IconButton>
+        )}
         onLogoutSuccess={onSuccess}
       />
     </div>
