@@ -17,7 +17,7 @@
 
 .entries {
     display: grid;
-    grid-template-columns: 0.22fr 0.23fr 0.04fr 0.3fr 0.18fr;
+    grid-template-columns: 0.3fr 0.3fr 0.4fr 0.3fr 0.3fr;
     padding-top: 5px;
 }
 
@@ -31,7 +31,6 @@
 
 .entry-right {
     text-align: left;
-    padding-left: 50px;
 }
 
 .arrow {
