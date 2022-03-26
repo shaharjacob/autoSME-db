@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import MuiAlert from '@mui/material/Alert';
 import Tooltip from '@mui/material/Tooltip';
 import Snackbar from '@mui/material/Snackbar';
+import AddIcon from '@mui/icons-material/Add';
 import TextField from '@mui/material/TextField';
 import SendIcon from '@mui/icons-material/Send';
 import EditIcon from '@mui/icons-material/Edit';
@@ -14,7 +15,13 @@ import MessageIcon from '@mui/icons-material/Message';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+
 import './DisplayAnalogy.css'
+import AddMapping from './AddMapping';
 import { isNull } from '../../../utils'
 import { firebase  } from '../../firebase/InitFirebase';
 import structuredClone from '@ungap/structured-clone';
@@ -38,6 +45,13 @@ const DisplayAnalogy = ( {id, values, email, showComments} ) => {
     const [sources, setSources] = useState([""])
     const [comments, setComments] = useState([])
 
+    // edit mode
+    const [baseToAdd, setBaseToAdd] = useState("")
+    const [targetToAdd, setTargetToAdd] = useState("")
+    const [baseToAddError, setBaseToAddError] = useState(false)
+    const [targetToAddError, setTargetToAddError] = useState(false)
+
+    const [openDialogExtendAnalogy, setOpenDialogExtendAnalogy] = useState(false);
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const [currentComment, setCurrentComment] = useState("")
     const analogiesRef = db.ref(`analogies/${id}`);
@@ -83,6 +97,26 @@ const DisplayAnalogy = ( {id, values, email, showComments} ) => {
             fetchDatabaseWithID();
         }
     }, [id, values, email])
+
+    async function onAddNewMappingToExistingAnalogy() {
+        if (!baseToAdd || !targetToAdd) {
+            if (!baseToAdd) {
+                setBaseToAddError(true)
+            }
+            if (!targetToAdd) {
+                setTargetToAddError(true)
+            }
+            return
+        }
+        let elementFromDB = await analogiesRef.once('value');
+        elementFromDB.ref.update({
+            base: [...base, baseToAdd],
+            target: [...target, targetToAdd]
+        });
+        setBase(prevState => [...prevState, baseToAdd])
+        setTarget(prevState => [...prevState, targetToAdd])
+        setOpenDialogExtendAnalogy(false)
+    }
 
     function expandComment() {
         let elem = document.getElementById(id)
@@ -244,6 +278,37 @@ const DisplayAnalogy = ( {id, values, email, showComments} ) => {
                         </div>
                     )
                 })}
+                <div className='extend-analogy'>
+                    <IconButton onClick={() => setOpenDialogExtendAnalogy(true)}>
+                        <AddIcon variant="outlined" sx={{fontSize: '14px'}} />
+                    </IconButton>
+                    <Dialog
+                        open={openDialogExtendAnalogy}
+                        onClose={() => setOpenDialogExtendAnalogy(false)}
+                        aria-labelledby="extend-analogy-title"
+                        aria-describedby="extend-analogy-body"
+                    >
+                        <DialogTitle id="extend-analogy-title">
+                            Extend existing analogy
+                        </DialogTitle>
+                        <DialogContent id="extend-analogy-body">
+                            <AddMapping 
+                                setBase={setBaseToAdd} 
+                                setTarget={setTargetToAdd} 
+                                baseError={baseToAddError}
+                                targetError={targetToAddError}
+                            />
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={() => setOpenDialogExtendAnalogy(false)}>
+                                Cancel
+                            </Button>
+                            <Button onClick={() => onAddNewMappingToExistingAnalogy()} autoFocus>
+                                Add
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
+                </div>
             </div>
             <div className='vote-and-comment'>
                 <div className='vote-and-comment-buttons'>

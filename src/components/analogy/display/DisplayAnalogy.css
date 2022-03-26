@@ -15,6 +15,10 @@
     grid-template-columns: 0.5fr 0.5fr;
 }
 
+.extend-analogy {
+    margin-top: 8px;
+}
+
 .entries {
     display: grid;
     grid-template-columns: 0.3fr 0.3fr 0.4fr 0.3fr 0.3fr;
