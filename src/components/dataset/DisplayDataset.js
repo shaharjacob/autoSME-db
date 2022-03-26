@@ -134,8 +134,6 @@ const DisplayDataset = ({ email }) => {
             entry["target"] = value.target
             data.push(entry)
         }
-        data = Array(10).fill(data)
-        console.log(JSON.stringify(data).length)
         return encodeURIComponent(JSON.stringify(data))
     }
 

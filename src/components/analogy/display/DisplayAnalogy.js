@@ -1,4 +1,5 @@
 import React, { useState, useEffect, forwardRef } from 'react';
+import structuredClone from '@ungap/structured-clone';
 
 import Button from '@mui/material/Button';
 import MuiAlert from '@mui/material/Alert';
@@ -12,8 +13,10 @@ import IconButton from '@mui/material/IconButton';
 import LaunchIcon from '@mui/icons-material/Launch';
 import ReportIcon from '@mui/icons-material/Report';
 import MessageIcon from '@mui/icons-material/Message';
+import GppMaybeIcon from '@mui/icons-material/GppMaybe';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
+import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -24,7 +27,6 @@ import './DisplayAnalogy.css'
 import AddMapping from './AddMapping';
 import { isNull } from '../../../utils'
 import { firebase  } from '../../firebase/InitFirebase';
-import structuredClone from '@ungap/structured-clone';
 
 const db = firebase.database()
 
@@ -37,6 +39,7 @@ const DisplayAnalogy = ( {id, values, email, showComments} ) => {
     const [base, setBase] = useState([])
     const [target, setTarget] = useState([])
     const [creator, setCreator] = useState("")
+    const [mappingCreators, setMappingCreators] = useState([])
 
     // optional db fields
     const [story, setStory] = useState({base: "", target: ""})
@@ -62,6 +65,7 @@ const DisplayAnalogy = ( {id, values, email, showComments} ) => {
             setBase(obj.base)
             setTarget(obj.target)
             setCreator(obj.creator)
+            setMappingCreators(obj.mapping_creators)
     
             // optional fields
             if (obj.hasOwnProperty("story")) {
@@ -111,11 +115,24 @@ const DisplayAnalogy = ( {id, values, email, showComments} ) => {
         let elementFromDB = await analogiesRef.once('value');
         elementFromDB.ref.update({
             base: [...base, baseToAdd],
-            target: [...target, targetToAdd]
+            target: [...target, targetToAdd],
+            mapping_creators: [...mappingCreators, email]
         });
         setBase(prevState => [...prevState, baseToAdd])
         setTarget(prevState => [...prevState, targetToAdd])
+        setMappingCreators(prevState => [...prevState, email])
         setOpenDialogExtendAnalogy(false)
+    }
+
+    async function onConfirmMapping(idx) {
+        let mappingCreatorsClone = structuredClone(mappingCreators);
+        mappingCreatorsClone[idx] = email;
+
+        let elementFromDB = await analogiesRef.once('value');
+        elementFromDB.ref.update({
+            mapping_creators: mappingCreatorsClone
+        });
+        setMappingCreators(mappingCreatorsClone)
     }
 
     function expandComment() {
@@ -181,6 +198,45 @@ const DisplayAnalogy = ( {id, values, email, showComments} ) => {
           _updateVote();
     }
 
+    const IsVerifiedMapping = (idx) => {
+        if (mappingCreators[idx] !== creator) {
+            if (creator !== email) {
+                return (
+                    <Tooltip title="This mapping not verified by the analogy creator!">
+                        <GppMaybeIcon 
+                            color='warning' 
+                            sx={{fontSize: '14px'}} 
+                        />
+                    </Tooltip>
+                )
+            }
+            else {
+                return (
+                    <Tooltip title="Click here to confirm this mapping">
+                        <span>
+                            <GppMaybeIcon 
+                                color='warning' 
+                                sx={{fontSize: '14px', cursor: 'pointer'}} 
+                                onClick={() => onConfirmMapping(idx)}
+                            />
+                        </span>
+                    </Tooltip>
+                )
+            }
+            
+        }
+        else {
+            return (
+                <Tooltip title="Verified by the analogy creator!">
+                    <VerifiedUserIcon 
+                        color='primary' 
+                        sx={{fontSize: '14px'}} 
+                    />
+                </Tooltip>
+            )
+        }
+    }
+
     return (
         <div id='display-analogy-container'>
             <Snackbar 
@@ -221,9 +277,11 @@ const DisplayAnalogy = ( {id, values, email, showComments} ) => {
                 </div>
                 <div className='align-right'>
                     <Tooltip title="Report inappropriate content">
-                        <IconButton onClick={() => window.open(`mailto:shahar.jacob@mail.huji.ac.il?subject=${mailTitle}&body=${mailBody}`)}>
-                            <ReportIcon />
-                        </IconButton>
+                        <span>
+                            <IconButton onClick={() => window.open(`mailto:shahar.jacob@mail.huji.ac.il?subject=${mailTitle}&body=${mailBody}`)}>
+                                <ReportIcon />
+                            </IconButton>
+                        </span>
                     </Tooltip>
                     <Tooltip title="Open in a new tab">
                         <span>
@@ -274,7 +332,10 @@ const DisplayAnalogy = ( {id, values, email, showComments} ) => {
                             <div className='entry-right'>
                                 {target[idx]}
                             </div>
-                            <div></div>
+                            <div>
+                                {IsVerifiedMapping(idx)}
+                                
+                            </div>
                         </div>
                     )
                 })}

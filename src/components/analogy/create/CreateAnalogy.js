@@ -67,9 +67,11 @@ const CreateAnalogy = ( { email } ) => {
 
         let actual_base = []
         let actual_target = []
+        let mapping_creators = []
         for (let i = 0; i < analogyLength; i++) {
             actual_base.push(base[i])
             actual_target.push(target[i])
+            mapping_creators.push(email)
         }
 
         let sources = []
@@ -84,6 +86,7 @@ const CreateAnalogy = ( { email } ) => {
             base: actual_base,
             target: actual_target,
             creator: email,
+            mapping_creators: mapping_creators,
             story: {
                 base: story1,
                 target: story2

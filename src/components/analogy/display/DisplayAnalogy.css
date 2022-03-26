@@ -124,3 +124,8 @@
     padding-bottom: 10px;
     font-size: 10px;
 }
+
+.mapping-not-verified:hover {
+    color: #0c6e11;
+    cursor: pointer;
+}
