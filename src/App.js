@@ -7,7 +7,6 @@ import Navbar from './components/navbar/Navbar'
 import Background from './components/background/Background';
 import RandomAnalogy from './components/random/RandomAnalogy';
 import DisplayDataset from './components/dataset//DisplayDataset';
-import DownloadPage from './components/download//DownloadPage';
 import CreateAnalogyWrapper from './components/analogy/create/CreateAnalogyWrapper';
 import DisplayAnalogyWrapper from './components/analogy/display/DisplayAnalogyWrapper';
 import EditAnalogyWrapper from './components/analogy/edit/EditAnalogyWrapper';
@@ -33,14 +32,13 @@ const App = () => {
         <div className='content'>
           <Background />
           <Routes>
-            <Route path='/' element={<About email={email} />} />
+            <Route path='/' element={<DisplayDataset email={email} />} />
             <Route path='/about' element={<About email={email} />} />
             <Route path='/random' element={<RandomAnalogy email={email} />} />
             <Route path='/analogy' element={<DisplayAnalogyWrapper email={email} />} />
             <Route path='/dataset' element={<DisplayDataset email={email} />} />
             <Route path='/create' element={<CreateAnalogyWrapper email={email} />} />
             <Route path='/edit' element={<EditAnalogyWrapper email={email} />} />
-            <Route path='/download' element={<DownloadPage email={email} />} />
           </Routes>
           <Background />
         </div>

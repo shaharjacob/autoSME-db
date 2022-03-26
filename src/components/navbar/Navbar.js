@@ -7,7 +7,6 @@ import InfoIcon from '@mui/icons-material/Info';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ShuffleIcon from '@mui/icons-material/Shuffle';
-import DownloadIcon from '@mui/icons-material/Download';
 import AutoAwesomeMotionIcon from '@mui/icons-material/AutoAwesomeMotion';
 
 import Menu from '@mui/material/Menu';
@@ -84,13 +83,6 @@ const Navbar = ( { user, setUser, setEmail } ) => {
                 <MenuItem>
                   <ListItemIcon><AddIcon fontSize="small" /></ListItemIcon>
                   <ListItemText>Create analogy</ListItemText>
-                </MenuItem>
-              </Link>
-
-              <Link href="/download" color='inherit' underline='none'>
-                <MenuItem>
-                  <ListItemIcon><DownloadIcon fontSize="small" /></ListItemIcon>
-                  <ListItemText>Download data</ListItemText>
                 </MenuItem>
               </Link>
 

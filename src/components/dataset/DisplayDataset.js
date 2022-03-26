@@ -23,7 +23,6 @@ const DisplayDataset = ({ email }) => {
     const [filteredDatabaseOnlyBySize, setFilteredDatabaseOnlyBySize] = useState({})
     const [filteredDatabaseOnlyByKeywords, setFilteredDatabaseOnlyByKeywords] = useState({})
     const [keywordsToIDs, setKeywordsToIDs] = useState([])
-    const analogiesRef = db.ref("analogies");
 
     // download
     const [anchorEl, setAnchorEl] = useState(null);
@@ -35,6 +34,7 @@ const DisplayDataset = ({ email }) => {
 
     useEffect(() => { 
         async function fetchDatabase() {
+            const analogiesRef = db.ref("analogies");
             let _dataset = await analogiesRef.once('value');
             let _snapshot =  _dataset.val()
             let _database = {}
@@ -123,16 +123,19 @@ const DisplayDataset = ({ email }) => {
     }
 
     function get_data_for_json() {
-        let data = {}
-        for (const [key, value] of Object.entries(filteredDatabase)) {
-            data[key] = {}
-            data[key]["story"] = {
+        let data = []
+        for (const value of Object.values(filteredDatabase)) {
+            let entry = {}
+            entry["story"] = {
                 "base": value.story.base,
                 "target": value.story.target
             }
-            data[key]["base"] = value.base
-            data[key]["target"] = value.target
+            entry["base"] = value.base
+            entry["target"] = value.target
+            data.push(entry)
         }
+        data = Array(10).fill(data)
+        console.log(JSON.stringify(data).length)
         return encodeURIComponent(JSON.stringify(data))
     }
 
