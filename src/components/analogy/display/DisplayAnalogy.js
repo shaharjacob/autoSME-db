@@ -164,6 +164,7 @@ const DisplayAnalogy = ( {id, values, email, showComments} ) => {
         if (reason === 'clickaway') {
           return;
         }
+        setOpenSnackbar(false);
     };
 
     const Alert = forwardRef(function Alert(props, ref) {
