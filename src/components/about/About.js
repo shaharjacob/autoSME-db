@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
+
 import './About.css'
 import DisplayAnalogy from '../analogy/display/DisplayAnalogy'
 import { firebase  } from '../firebase/InitFirebase';
@@ -10,6 +13,7 @@ const About = ({ email }) => {
 
   const [analogyID, setAnalogyID] = useState(null);
   const analogiesRef = db.ref(`analogies`);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => { 
     async function fetchDatabase() {
@@ -27,12 +31,19 @@ const About = ({ email }) => {
         }
       }
       setAnalogyID(_chosen_id)
+      setIsLoading(false)
     }
     fetchDatabase();
   }, [])
 
   return (
     <div className='about-container'>
+        <Backdrop
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={isLoading}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
         <div className='about-title'>
             About
         </div>

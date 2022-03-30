@@ -1,11 +1,13 @@
 import React, {useState, useEffect} from 'react';
 
 import { CSVLink } from 'react-csv';
-import Tooltip from '@mui/material/Tooltip';
-import FileDownloadIcon from '@mui/icons-material/FileDownload';
-import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
+import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+import Backdrop from '@mui/material/Backdrop';
+import IconButton from '@mui/material/IconButton';
+import CircularProgress from '@mui/material/CircularProgress';
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
 
 import './DisplayDataset.css'
 import FilterBySize from './FilterBySize';
@@ -23,6 +25,7 @@ const DisplayDataset = ({ email }) => {
     const [filteredDatabaseOnlyBySize, setFilteredDatabaseOnlyBySize] = useState({})
     const [filteredDatabaseOnlyByKeywords, setFilteredDatabaseOnlyByKeywords] = useState({})
     const [keywordsToIDs, setKeywordsToIDs] = useState([])
+    const [isLoading, setIsLoading] = useState(true);
 
     // download
     const [anchorEl, setAnchorEl] = useState(null);
@@ -80,6 +83,7 @@ const DisplayDataset = ({ email }) => {
             setFilteredDatabase(_database)
             setFilteredDatabaseOnlyBySize(_database)
             setFilteredDatabaseOnlyByKeywords(_database)
+            setIsLoading(false)
           }
           fetchDatabase()
     }, [])
@@ -139,6 +143,12 @@ const DisplayDataset = ({ email }) => {
 
     return (
         <div id='display-dataset-container'>
+            <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={isLoading}
+                >
+                <CircularProgress color="inherit" />
+            </Backdrop>
             <div className='download-csv'>
             <IconButton
                 id="basic-button"

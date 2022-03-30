@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
 import Button from '@mui/material/Button';
+import Backdrop from '@mui/material/Backdrop';
 import ShuffleIcon from '@mui/icons-material/Shuffle';
+import CircularProgress from '@mui/material/CircularProgress'
 
 import './RandomAnalogy.css'
 import DisplayAnalogy from '../analogy/display/DisplayAnalogy'
@@ -13,6 +15,7 @@ const RandomAnalogy = ({ email }) => {
 
   const [analogyID, setAnalogyID] = useState(null)
   const analogiesRef = db.ref(`analogies`);
+  const [isLoading, setIsLoading] = useState(true);
 
   function getRandomInt(max) {
     return Math.floor(Math.random() * max);
@@ -32,6 +35,7 @@ const RandomAnalogy = ({ email }) => {
         }
         i++;
       }
+      setIsLoading(false)
     }
     fetchDatabase();
   }
@@ -42,6 +46,12 @@ const RandomAnalogy = ({ email }) => {
 
   return (
     <div className='random-container'>
+        <Backdrop
+            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={isLoading}
+            >
+            <CircularProgress color="inherit" />
+        </Backdrop>
         <div className='random-analogy'>
             {analogyID
             ? <DisplayAnalogy id={analogyID} email={email} showComments={false} />
