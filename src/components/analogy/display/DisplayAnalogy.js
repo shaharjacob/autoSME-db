@@ -30,7 +30,7 @@ import { firebase  } from '../../firebase/InitFirebase';
 
 const db = firebase.database()
 
-const DisplayAnalogy = ( {id, values, email, showComments} ) => {
+const DisplayAnalogy = ( {id, values, email, showComments, setIsLoading} ) => {
     
     const mailTitle = "Report inappropriate content"
     const mailBody = `Analogy id ${id}`
@@ -97,6 +97,7 @@ const DisplayAnalogy = ( {id, values, email, showComments} ) => {
                 let elementFromDB = await analogiesRef.once('value');
                 let snapshot =  elementFromDB.val();
                 setStates(snapshot);
+                setIsLoading(false)
             }
             fetchDatabaseWithID();
         }
