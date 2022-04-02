@@ -117,7 +117,8 @@ const DisplayAnalogy = ( {id, values, email, showComments, setIsLoading} ) => {
         elementFromDB.ref.update({
             base: [...base, baseToAdd],
             target: [...target, targetToAdd],
-            mapping_creators: [...mappingCreators, email]
+            mapping_creators: [...mappingCreators, email],
+            last_update: new Date().toLocaleString()
         });
         setBase(prevState => [...prevState, baseToAdd])
         setTarget(prevState => [...prevState, targetToAdd])

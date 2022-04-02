@@ -17,7 +17,6 @@ import DisplayAnalogy from '../analogy/display/DisplayAnalogy';
 
 const db = firebase.database()
 
-
 const DisplayDataset = ({ email }) => {
 
     const [origDatabase, setOrigDatabase] = useState({})
@@ -38,12 +37,13 @@ const DisplayDataset = ({ email }) => {
     useEffect(() => { 
         async function fetchDatabase() {
             const analogiesRef = db.ref("analogies");
-            let _dataset = await analogiesRef.once('value');
-            let _snapshot =  _dataset.val()
-            let _database = {}
+            let _dataset = await analogiesRef.orderByChild("last_update").once('value');
+            let _database_as_array = []
             let _keywords = {} // we use dictionary in the first step for quick 'in' check
-            for (const [analogyID, analogyValues] of Object.entries(_snapshot)) {
-                _database[analogyID] = analogyValues
+            _dataset.forEach(function(child) {
+                let analogyValues = child.val()
+                let analogyID = child.key
+                _database_as_array.push([analogyID, analogyValues])
 
                 // analogy keywords (base and target)
                 for (let i = 0; i < analogyValues.base.length; i++) {
@@ -69,7 +69,7 @@ const DisplayDataset = ({ email }) => {
                         _keywords[analogyValues.sources[i]].push(analogyID)
                     }
                 }
-            }
+            });
             // now we will convert the dictionary to array options format for the keywords search
             let _keywords_as_array = []
             for (const [k, v] of Object.entries(_keywords)) {
@@ -77,6 +77,11 @@ const DisplayDataset = ({ email }) => {
                     label: k,
                     analogies: v
                 })
+            }
+            _database_as_array.reverse()
+            let _database = {}
+            for (let i = 0; i < _database_as_array.length; i++) {
+                _database[_database_as_array[i][0]] = _database_as_array[i][1]
             }
             setKeywordsToIDs(_keywords_as_array)
             setOrigDatabase(_database)
@@ -215,7 +220,12 @@ const DisplayDataset = ({ email }) => {
             {Object.entries(filteredDatabase).map(([id, val]) => {
                 return (
                     <div key={id}>
-                        <DisplayAnalogy id={id} values={val} email={email} showComments={false} />
+                        <DisplayAnalogy 
+                            id={id} 
+                            values={val} 
+                            email={email} 
+                            showComments={false} 
+                        />
                     </div>
                 )
             })}

@@ -81,7 +81,7 @@ const CreateAnalogy = ( { email } ) => {
                 sources.push(sources_without_trim[i].trim())
             }
         }
-
+        let created_at = new Date().toLocaleString();
         let new_analogy = {
             base: actual_base,
             target: actual_target,
@@ -91,6 +91,9 @@ const CreateAnalogy = ( { email } ) => {
                 base: story1,
                 target: story2
             },
+            created_at: created_at,
+            last_update: created_at
+            
         }
 
         if (sources.length > 0) {
@@ -104,6 +107,8 @@ const CreateAnalogy = ( { email } ) => {
         setTarget(Array(ANALOGY_MAX_SIZE).fill(""))
         setAnalogyLength(2)
         setSourcesAsString("")
+        setStory1("")
+        setStory2("")
     }
 
     const handleCloseSnackbar = (event, reason) => {
@@ -126,6 +131,7 @@ const CreateAnalogy = ( { email } ) => {
                         label="Story 1 (Optional)"
                         style={{ width: '90%' }}
                         onChange={(e) => setStory1(e.target.value)}
+                        value={story1}
                         multiline
                     />
                 </div>
@@ -135,6 +141,7 @@ const CreateAnalogy = ( { email } ) => {
                         label="Story 2 (Optional)"
                         style={{ width: '90%' }}
                         onChange={(e) => setStory2(e.target.value)}
+                        value={story2}
                         multiline
                     />
                 </div>

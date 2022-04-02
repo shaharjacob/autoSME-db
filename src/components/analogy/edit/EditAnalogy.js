@@ -119,6 +119,7 @@ const EditAnalogy = ( { id, email } ) => {
                 base: story1,
                 target: story2
             },
+            last_update: new Date().toLocaleString()
         }
 
         if (sources.length > 0) {
