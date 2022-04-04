@@ -1,6 +1,7 @@
 import React, { useState, useEffect, forwardRef } from 'react';
 import structuredClone from '@ungap/structured-clone';
 
+import Chip from '@mui/material/Chip';
 import Button from '@mui/material/Button';
 import MuiAlert from '@mui/material/Alert';
 import Tooltip from '@mui/material/Tooltip';
@@ -45,7 +46,7 @@ const DisplayAnalogy = ( {id, values, email, showComments, setIsLoading} ) => {
     const [story, setStory] = useState({base: "", target: ""})
     const [votes, setVotes] = useState([])
     const [voteColor, setVoteColor] = useState("#646464")
-    const [sources, setSources] = useState([""])
+    const [sources, setSources] = useState([])
     const [comments, setComments] = useState([])
 
     // edit mode
@@ -293,7 +294,7 @@ const DisplayAnalogy = ( {id, values, email, showComments, setIsLoading} ) => {
                             </IconButton>
                         </span>
                     </Tooltip>
-                    <Tooltip title="Edit Analogy">
+                    <Tooltip title={creator === email ? 'Edit Analogy' : 'You are not the owner of this analogy!'}>
                         <span>
                             <IconButton onClick={() => window.open(`/edit?id=${id}`)} disabled={creator !== email ? true : false}>
                                 <EditIcon />
@@ -324,7 +325,7 @@ const DisplayAnalogy = ( {id, values, email, showComments, setIsLoading} ) => {
             <div className='display-analogy-unit'>
                 {base.map((b, idx) => {
                     return (
-                        <div className='entries' key={`display_analogy_${idx}`}>
+                        <div className={`entries ${idx !== base.length - 1 ? 'border-bottom-entry' : ''}`} key={`display_analogy_${idx}`}>
                             <div></div>
                             <div className='align-left'>
                                 {base[idx]}
@@ -418,7 +419,6 @@ const DisplayAnalogy = ( {id, values, email, showComments, setIsLoading} ) => {
             ?
                 <>
                     {comments.map((val, idx) => {
-                        // TODO: option to remove comments
                         return (
                             <div key={`comments_${idx}`} className='comment border-bottom'>
                                 <div className='comment-content'>{val.comment}</div>
@@ -435,10 +435,12 @@ const DisplayAnalogy = ( {id, values, email, showComments, setIsLoading} ) => {
                 <span className='sources-content'>
                     {sources.map((val, index) => {
                         return (
-                            <span key={`${val}_${index}`}>
-                                {val}
-                                {(index === sources.length - 1) ? "" : ", "} 
-                            </span>
+                            <Chip 
+                                key={`${val}_${index}`} 
+                                label={val} 
+                                size="small"
+                                sx={{fontSize: '12px', color: '#646464', marginRight: '5px'}}
+                            />
                         )
                     })}
                 </span>

@@ -155,47 +155,47 @@ const DisplayDataset = ({ email }) => {
                 <CircularProgress color="inherit" />
             </Backdrop>
             <div className='download-csv'>
-            <IconButton
-                id="basic-button"
-                aria-controls={openDownloadMenu ? 'basic-menu' : undefined}
-                aria-haspopup="true"
-                aria-expanded={openDownloadMenu ? 'true' : undefined}
-                onClick={handleClick}
-            >
-                <Tooltip title="Download the currently displayed database">
-                    <FileDownloadIcon sx={{color: '#868686'}} />
-                </Tooltip>
-                <span style={{fontSize: '9px'}}>Download</span>
-            </IconButton>
-            <Menu
-                id="basic-menu"
-                anchorEl={anchorEl}
-                open={openDownloadMenu}
-                onClose={() => setAnchorEl(null)}
-                MenuListProps={{
-                    'aria-labelledby': 'basic-button',
-                }}
-            >
-                <MenuItem>
-                    <CSVLink
-                        headers={get_headers_for_csv()}
-                        data={get_data_for_csv()}
-                        filename="autosme_db.csv"
-                        className='download-label'
-                    >
-                        .csv
-                    </CSVLink>
-                </MenuItem>
-                <MenuItem>
-                    <a 
-                        href={`data:text/json;charset=utf-8,${get_data_for_json()}`} 
-                        download="filename.json"
-                        className='download-label'
-                    >
-                        .json
-                    </a>
-                </MenuItem>
-            </Menu>
+                <IconButton
+                    id="basic-button"
+                    aria-controls={openDownloadMenu ? 'basic-menu' : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={openDownloadMenu ? 'true' : undefined}
+                    onClick={handleClick}
+                >
+                    <Tooltip title="Download the currently displayed database">
+                        <FileDownloadIcon sx={{color: '#868686'}} />
+                    </Tooltip>
+                    <span style={{fontSize: '9px'}}>Download</span>
+                </IconButton>
+                <Menu
+                    id="basic-menu"
+                    anchorEl={anchorEl}
+                    open={openDownloadMenu}
+                    onClose={() => setAnchorEl(null)}
+                    MenuListProps={{
+                        'aria-labelledby': 'basic-button',
+                    }}
+                >
+                    <MenuItem>
+                        <CSVLink
+                            headers={get_headers_for_csv()}
+                            data={get_data_for_csv()}
+                            filename="autosme_db.csv"
+                            className='download-label'
+                        >
+                            .csv
+                        </CSVLink>
+                    </MenuItem>
+                    <MenuItem>
+                        <a 
+                            href={`data:text/json;charset=utf-8,${get_data_for_json()}`} 
+                            download="filename.json"
+                            className='download-label'
+                        >
+                            .json
+                        </a>
+                    </MenuItem>
+                </Menu>
                 
             </div>
             <div className='filter'>
