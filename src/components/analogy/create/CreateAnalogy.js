@@ -169,6 +169,7 @@ const CreateAnalogy = ( { email } ) => {
                         id="standard-adornment-sources"
                         placeholder='For multiple sources seperate by comma'
                         onChange={(e) => setSourcesAsString(e.target.value)}
+                        value={sourcesAsString}
                     />
                 </FormControl>
                 </div>
