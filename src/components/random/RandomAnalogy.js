@@ -52,12 +52,12 @@ const RandomAnalogy = ({ email }) => {
             >
             <CircularProgress color="inherit" />
         </Backdrop>
-        <div className='random-analogy'>
-            {analogyID
-            ? <DisplayAnalogy id={analogyID} email={email} showComments={false} />
-            : <></>
-            }
-        </div>
+        {analogyID
+        ? 
+          <DisplayAnalogy id={analogyID} email={email} showComments={false} setIsLoading={setIsLoading} />
+        : 
+          <></>
+        }
         <div className='show-next'>
           <Button onClick={() => generate()} variant="contained" startIcon={<ShuffleIcon />}>
               Generate

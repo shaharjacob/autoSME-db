@@ -1,9 +1,8 @@
 .random-container {
     background-color: rgb(241, 241, 241);
     text-align: center;
-    margin-left: auto;
-    margin-right: auto;
     height: 100%;
+    padding-top: 40px;
 }
 
 .show-next {
@@ -11,9 +10,7 @@
 }
 
 @media only screen and (max-width: 978px) {    
-    
-    .random-analogy {
-        padding: 10px;
-        padding-top: 20px;
+    .random-container {
+        padding-top: 30px;
     }
   }

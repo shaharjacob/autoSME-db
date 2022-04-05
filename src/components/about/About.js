@@ -59,7 +59,7 @@ const About = ({ email }) => {
         </div>
         <div className='about-analogy-example'>
             {analogyID
-            ? <DisplayAnalogy id={analogyID} email={email} showComments={false} />
+            ? <DisplayAnalogy id={analogyID} email={email} showComments={false} setIsLoading={setIsLoading} />
             : <></>
             }
         </div>
