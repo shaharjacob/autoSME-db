@@ -1,0 +1,1042 @@
+[
+	{
+		"base": [
+			"answer",
+			"riddle"
+		],
+		"target": [
+			"key",
+			"lock"
+		],
+		"sources": [
+			"Green eval (far)"
+		]
+	},
+	{
+		"base": [
+			"answer",
+			"riddle"
+		],
+		"target": [
+			"solution",
+			"problem"
+		],
+		"sources": [
+			"Green eval (near)"
+		]
+	},
+	{
+		"base": [
+			"ash",
+			"fireplace"
+		],
+		"target": [
+			"lint",
+			"pocket"
+		],
+		"sources": [
+			"Green eval (far)"
+		]
+	},
+	{
+		"base": [
+			"ash",
+			"fireplace"
+		],
+		"target": [
+			"soot",
+			"chimney"
+		],
+		"sources": [
+			"Green eval (near)"
+		]
+	},
+	{
+		"base": [
+			"aspirin",
+			"pain"
+		],
+		"target": [
+			"muffler",
+			"noise"
+		],
+		"sources": [
+			"Green eval (far)"
+		]
+	},
+	{
+		"base": [
+			"aspirin",
+			"pain"
+		],
+		"target": [
+			"antacid",
+			"heartburn"
+		],
+		"sources": [
+			"Green eval (near)"
+		]
+	},
+	{
+		"base": [
+			"baker",
+			"cake"
+		],
+		"target": [
+			"scientist",
+			"discovery"
+		],
+		"sources": [
+			"Green eval (far)"
+		]
+	},
+	{
+		"base": [
+			"baker",
+			"cake"
+		],
+		"target": [
+			"chef",
+			"meal"
+		],
+		"sources": [
+			"Green eval (near)"
+		]
+	},
+	{
+		"base": [
+			"basket",
+			"picnic"
+		],
+		"target": [
+			"holster",
+			"gun"
+		],
+		"sources": [
+			"Green eval (far)"
+		]
+	},
+	{
+		"base": [
+			"basket",
+			"picnic"
+		],
+		"target": [
+			"lunchbox",
+			"lunch"
+		],
+		"sources": [
+			"Green eval (near)"
+		]
+	},
+	{
+		"base": [
+			"basketball",
+			"hoop"
+		],
+		"target": [
+			"traveler",
+			"destination"
+		],
+		"sources": [
+			"Green eval (far)"
+		]
+	},
+	{
+		"base": [
+			"basketball",
+			"hoop"
+		],
+		"target": [
+			"soccerball",
+			"goal"
+		],
+		"sources": [
+			"Green eval (near)"
+		]
+	},
+	{
+		"base": [
+			"blindness",
+			"sight"
+		],
+		"target": [
+			"poverty",
+			"money"
+		],
+		"sources": [
+			"Green eval (far)"
+		]
+	},
+	{
+		"base": [
+			"blindness",
+			"sight"
+		],
+		"target": [
+			"deafness",
+			"hearing"
+		],
+		"sources": [
+			"Green eval (near)"
+		]
+	},
+	{
+		"base": [
+			"blizzard",
+			"snowflake"
+		],
+		"target": [
+			"army",
+			"soldier"
+		],
+		"sources": [
+			"Green eval (far)"
+		]
+	},
+	{
+		"base": [
+			"blizzard",
+			"snowflake"
+		],
+		"target": [
+			"monsoon",
+			"raindrop"
+		],
+		"sources": [
+			"Green eval (near)"
+		]
+	},
+	{
+		"base": [
+			"bracelet",
+			"wrist"
+		],
+		"target": [
+			"moat",
+			"castle"
+		],
+		"sources": [
+			"Green eval (far)"
+		]
+	},
+	{
+		"base": [
+			"bracelet",
+			"wrist"
+		],
+		"target": [
+			"ring",
+			"finger"
+		],
+		"sources": [
+			"Green eval (near)"
+		]
+	},
+	{
+		"base": [
+			"burger",
+			"bun"
+		],
+		"target": [
+			"book",
+			"cover"
+		],
+		"sources": [
+			"Green eval (far)"
+		]
+	},
+	{
+		"base": [
+			"burger",
+			"bun"
+		],
+		"target": [
+			"sub",
+			"roll"
+		],
+		"sources": [
+			"Green eval (near)"
+		]
+	},
+	{
+		"base": [
+			"cleanser",
+			"face"
+		],
+		"target": [
+			"absolution",
+			"sinner"
+		],
+		"sources": [
+			"Green eval (far)"
+		]
+	},
+	{
+		"base": [
+			"cleanser",
+			"face"
+		],
+		"target": [
+			"soap",
+			"body"
+		],
+		"sources": [
+			"Green eval (near)"
+		]
+	},
+	{
+		"base": [
+			"eraser",
+			"pencil"
+		],
+		"target": [
+			"amnesia",
+			"memory"
+		],
+		"sources": [
+			"Green eval (far)"
+		]
+	},
+	{
+		"base": [
+			"eraser",
+			"pencil"
+		],
+		"target": [
+			"whiteout",
+			"pen"
+		],
+		"sources": [
+			"Green eval (near)"
+		]
+	},
+	{
+		"base": [
+			"father",
+			"son"
+		],
+		"target": [
+			"inventor",
+			"invention"
+		],
+		"sources": [
+			"Green eval (far)"
+		]
+	},
+	{
+		"base": [
+			"father",
+			"son"
+		],
+		"target": [
+			"mother",
+			"daughter"
+		],
+		"sources": [
+			"Green eval (near)"
+		]
+	},
+	{
+		"base": [
+			"flock",
+			"goose"
+		],
+		"target": [
+			"constellation",
+			"star"
+		],
+		"sources": [
+			"Green eval (far)"
+		]
+	},
+	{
+		"base": [
+			"flock",
+			"goose"
+		],
+		"target": [
+			"wolfpack",
+			"wolf"
+		],
+		"sources": [
+			"Green eval (near)"
+		]
+	},
+	{
+		"base": [
+			"foresight",
+			"future"
+		],
+		"target": [
+			"x-ray",
+			"bone"
+		],
+		"sources": [
+			"Green eval (far)"
+		]
+	},
+	{
+		"base": [
+			"foresight",
+			"future"
+		],
+		"target": [
+			"hindsight",
+			"past"
+		],
+		"sources": [
+			"Green eval (near)"
+		]
+	},
+	{
+		"base": [
+			"foundation",
+			"house"
+		],
+		"target": [
+			"premise",
+			"argument"
+		],
+		"sources": [
+			"Green eval (far)"
+		]
+	},
+	{
+		"base": [
+			"foundation",
+			"house"
+		],
+		"target": [
+			"base",
+			"structure"
+		],
+		"sources": [
+			"Green eval (near)"
+		]
+	},
+	{
+		"base": [
+			"furnace",
+			"coal"
+		],
+		"target": [
+			"stomach",
+			"food"
+		],
+		"sources": [
+			"Green eval (far)"
+		]
+	},
+	{
+		"base": [
+			"furnace",
+			"coal"
+		],
+		"target": [
+			"woodstove",
+			"wood"
+		],
+		"sources": [
+			"Green eval (near)"
+		]
+	},
+	{
+		"base": [
+			"hoof",
+			"hoofprint"
+		],
+		"target": [
+			"introduction",
+			"impression"
+		],
+		"sources": [
+			"Green eval (far)"
+		]
+	},
+	{
+		"base": [
+			"hoof",
+			"hoofprint"
+		],
+		"target": [
+			"paw",
+			"pawprint"
+		],
+		"sources": [
+			"Green eval (near)"
+		]
+	},
+	{
+		"base": [
+			"immunization",
+			"disease"
+		],
+		"target": [
+			"forewarning",
+			"surprise"
+		],
+		"sources": [
+			"Green eval (far)"
+		]
+	},
+	{
+		"base": [
+			"immunization",
+			"disease"
+		],
+		"target": [
+			"vaccination",
+			"infection"
+		],
+		"sources": [
+			"Green eval (near)"
+		]
+	},
+	{
+		"base": [
+			"jacket",
+			"zipper"
+		],
+		"target": [
+			"wound",
+			"suture"
+		],
+		"sources": [
+			"Green eval (far)"
+		]
+	},
+	{
+		"base": [
+			"jacket",
+			"zipper"
+		],
+		"target": [
+			"overcoat",
+			"button"
+		],
+		"sources": [
+			"Green eval (near)"
+		]
+	},
+	{
+		"base": [
+			"ketchup",
+			"tomato"
+		],
+		"target": [
+			"fuel",
+			"petroleum"
+		],
+		"sources": [
+			"Green eval (far)"
+		]
+	},
+	{
+		"base": [
+			"ketchup",
+			"tomato"
+		],
+		"target": [
+			"guacamole",
+			"avocado"
+		],
+		"sources": [
+			"Green eval (near)"
+		]
+	},
+	{
+		"base": [
+			"kitten",
+			"cat"
+		],
+		"target": [
+			"spark",
+			"fire"
+		],
+		"sources": [
+			"Green eval (far)"
+		]
+	},
+	{
+		"base": [
+			"kitten",
+			"cat"
+		],
+		"target": [
+			"puppy",
+			"dog"
+		],
+		"sources": [
+			"Green eval (near)"
+		]
+	},
+	{
+		"base": [
+			"knee",
+			"kneepad"
+		],
+		"target": [
+			"snail",
+			"shell"
+		],
+		"sources": [
+			"Green eval (far)"
+		]
+	},
+	{
+		"base": [
+			"knee",
+			"kneepad"
+		],
+		"target": [
+			"elbow",
+			"elbowpad"
+		],
+		"sources": [
+			"Green eval (near)"
+		]
+	},
+	{
+		"base": [
+			"lambchop",
+			"lamb"
+		],
+		"target": [
+			"chapter",
+			"book"
+		],
+		"sources": [
+			"Green eval (far)"
+		]
+	},
+	{
+		"base": [
+			"lambchop",
+			"lamb"
+		],
+		"target": [
+			"porkchop",
+			"pig"
+		],
+		"sources": [
+			"Green eval (near)"
+		]
+	},
+	{
+		"base": [
+			"landscaper",
+			"lawn"
+		],
+		"target": [
+			"stylist",
+			"hair"
+		],
+		"sources": [
+			"Green eval (far)"
+		]
+	},
+	{
+		"base": [
+			"landscaper",
+			"lawn"
+		],
+		"target": [
+			"gardener",
+			"garden"
+		],
+		"sources": [
+			"Green eval (near)"
+		]
+	},
+	{
+		"base": [
+			"launchpad",
+			"helicopter"
+		],
+		"target": [
+			"divingboard",
+			"diver"
+		],
+		"sources": [
+			"Green eval (far)"
+		]
+	},
+	{
+		"base": [
+			"launchpad",
+			"helicopter"
+		],
+		"target": [
+			"runway",
+			"airplane"
+		],
+		"sources": [
+			"Green eval (near)"
+		]
+	},
+	{
+		"base": [
+			"lawschool",
+			"lawyer"
+		],
+		"target": [
+			"vineyard",
+			"wine"
+		],
+		"sources": [
+			"Green eval (far)"
+		]
+	},
+	{
+		"base": [
+			"lawschool",
+			"lawyer"
+		],
+		"target": [
+			"medschool",
+			"doctor"
+		],
+		"sources": [
+			"Green eval (near)"
+		]
+	},
+	{
+		"base": [
+			"movie",
+			"screen"
+		],
+		"target": [
+			"lightning",
+			"sky"
+		],
+		"sources": [
+			"Green eval (far)"
+		]
+	},
+	{
+		"base": [
+			"movie",
+			"screen"
+		],
+		"target": [
+			"gameshow",
+			"television"
+		],
+		"sources": [
+			"Green eval (near)"
+		]
+	},
+	{
+		"base": [
+			"multiplication",
+			"product"
+		],
+		"target": [
+			"brewing",
+			"beer"
+		],
+		"sources": [
+			"Green eval (far)"
+		]
+	},
+	{
+		"base": [
+			"multiplication",
+			"product"
+		],
+		"target": [
+			"addition",
+			"sum"
+		],
+		"sources": [
+			"Green eval (near)"
+		]
+	},
+	{
+		"base": [
+			"nose",
+			"scent"
+		],
+		"target": [
+			"antenna",
+			"signal"
+		],
+		"sources": [
+			"Green eval (far)"
+		]
+	},
+	{
+		"base": [
+			"nose",
+			"scent"
+		],
+		"target": [
+			"tongue",
+			"taste"
+		],
+		"sources": [
+			"Green eval (near)"
+		]
+	},
+	{
+		"base": [
+			"orchard",
+			"apple"
+		],
+		"target": [
+			"neighborhood",
+			"apartment"
+		],
+		"sources": [
+			"Green eval (far)"
+		]
+	},
+	{
+		"base": [
+			"orchard",
+			"apple"
+		],
+		"target": [
+			"grove",
+			"orange"
+		],
+		"sources": [
+			"Green eval (near)"
+		]
+	},
+	{
+		"base": [
+			"painting",
+			"canvas"
+		],
+		"target": [
+			"birthmark",
+			"skin"
+		],
+		"sources": [
+			"Green eval (far)"
+		]
+	},
+	{
+		"base": [
+			"painting",
+			"canvas"
+		],
+		"target": [
+			"drawing",
+			"paper"
+		],
+		"sources": [
+			"Green eval (near)"
+		]
+	},
+	{
+		"base": [
+			"pen",
+			"pig"
+		],
+		"target": [
+			"reservoir",
+			"water"
+		],
+		"sources": [
+			"Green eval (far)"
+		]
+	},
+	{
+		"base": [
+			"pen",
+			"pig"
+		],
+		"target": [
+			"coop",
+			"chicken"
+		],
+		"sources": [
+			"Green eval (near)"
+		]
+	},
+	{
+		"base": [
+			"rectangle",
+			"perimeter"
+		],
+		"target": [
+			"nation",
+			"border"
+		],
+		"sources": [
+			"Green eval (far)"
+		]
+	},
+	{
+		"base": [
+			"rectangle",
+			"perimeter"
+		],
+		"target": [
+			"circle",
+			"circumference"
+		],
+		"sources": [
+			"Green eval (near)"
+		]
+	},
+	{
+		"base": [
+			"revising",
+			"manuscript"
+		],
+		"target": [
+			"evolving",
+			"species"
+		],
+		"sources": [
+			"Green eval (far)"
+		]
+	},
+	{
+		"base": [
+			"revising",
+			"manuscript"
+		],
+		"target": [
+			"editing",
+			"story"
+		],
+		"sources": [
+			"Green eval (near)"
+		]
+	},
+	{
+		"base": [
+			"saxophone",
+			"jazz"
+		],
+		"target": [
+			"typewriter",
+			"poetry"
+		],
+		"sources": [
+			"Green eval (far)"
+		]
+	},
+	{
+		"base": [
+			"saxophone",
+			"jazz"
+		],
+		"target": [
+			"harmonica",
+			"blues"
+		],
+		"sources": [
+			"Green eval (near)"
+		]
+	},
+	{
+		"base": [
+			"sugar",
+			"coffee"
+		],
+		"target": [
+			"incentive",
+			"deal"
+		],
+		"sources": [
+			"Green eval (far)"
+		]
+	},
+	{
+		"base": [
+			"sugar",
+			"coffee"
+		],
+		"target": [
+			"honey",
+			"tea"
+		],
+		"sources": [
+			"Green eval (near)"
+		]
+	},
+	{
+		"base": [
+			"thermometer",
+			"temperature"
+		],
+		"target": [
+			"polygraph",
+			"honesty"
+		],
+		"sources": [
+			"Green eval (far)"
+		]
+	},
+	{
+		"base": [
+			"thermometer",
+			"temperature"
+		],
+		"target": [
+			"barometer",
+			"pressure"
+		],
+		"sources": [
+			"Green eval (near)"
+		]
+	},
+	{
+		"base": [
+			"train",
+			"track"
+		],
+		"target": [
+			"signal",
+			"wire"
+		],
+		"sources": [
+			"Green eval (far)"
+		]
+	},
+	{
+		"base": [
+			"train",
+			"track"
+		],
+		"target": [
+			"trolley",
+			"rail"
+		],
+		"sources": [
+			"Green eval (near)"
+		]
+	},
+	{
+		"base": [
+			"watermelon",
+			"rind"
+		],
+		"target": [
+			"cigarette",
+			"butt"
+		],
+		"sources": [
+			"Green eval (far)"
+		]
+	},
+	{
+		"base": [
+			"watermelon",
+			"rind"
+		],
+		"target": [
+			"orange",
+			"peel"
+		],
+		"sources": [
+			"Green eval (near)"
+		]
+	}
+]

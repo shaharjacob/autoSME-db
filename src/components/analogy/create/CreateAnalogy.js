@@ -60,6 +60,31 @@ const CreateAnalogy = ( { email } ) => {
         return true
     }
 
+    // async function onCreateBatchOfAnalogies() {
+    //     var data = require('../../../analogies/green_eval.json')
+    //     for (let i = 0; i < data.length; i++) {
+    //         let mapping_creators = Array(data[i].base.length).fill(email)
+    //         let created_at = new Date().toLocaleString();
+    //         let new_analogy = {
+    //             base: data[i].base,
+    //             target: data[i].target,
+    //             creator: email,
+    //             mapping_creators: mapping_creators,
+    //             story: {
+    //                 base: "",
+    //                 target: ""
+    //             },
+    //             created_at: created_at,
+    //             last_update: created_at,
+    //             sources: data[i].sources
+                
+    //         }
+    //         const newAnalogyRef = await analogiesRef.push();
+    //         await newAnalogyRef.set(new_analogy)
+    //     }
+    //     setOpenSnackbar(true)
+    // }
+
     function onCreateAnalogy() {
         if (!validateAnalogy()) {
             return
@@ -125,6 +150,7 @@ const CreateAnalogy = ( { email } ) => {
     return (
         <div>
             <div id='create-analogy-container'>
+                {/* <button onClick={() => onCreateBatchOfAnalogies()}>batch</button> */}
                 <div className='story'>
                     <TextField
                         minRows={5}
